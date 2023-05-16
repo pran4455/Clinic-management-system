@@ -1,0 +1,1 @@
+This is clinic management system
