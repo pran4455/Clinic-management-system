@@ -1,2 +1,0 @@
-print("eshdfa")
-print('as')
