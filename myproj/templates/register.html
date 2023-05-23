@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration</title>
+  <link rel="stylesheet" type="text/css" href="register.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Registration</h2>
+    <form>
+      <div class="input-group">
+        <div class="input-row">
+          <input type="text" id="name" placeholder="Name" required>
+          <input type="tel" id="mobile" placeholder="Mobile Number" required>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-row">
+          <input type="text" id="dob" placeholder="Date of Birth" onfocus="(this.type='date')" required>
+          <input type="email" id="email" placeholder="Email" required>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-row">
+          <input type="password" id="password" placeholder="Password" required>
+          <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+        </div>
+      </div>
+      <div class="input-group">
+        <textarea type="text" id="address" placeholder="Address" required></textarea>
+      </div>
+      <div class="input-group">
+        <div class="input-row">
+          <input type="number" id="age" placeholder="Age" required>
+          <select id="gender" required>
+            <option value="" disabled selected>Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <input type="text" id="blood-group" placeholder="Blood Group" required>
+        </div>
+      </div>
+      <div class="input-group">
+        <button type="submit">Register</button>
+      </div>
+    </form>
+    <div class="login-link">
+      Already have an account? <a href="index.html">Login</a>
+    </div>
+  </div>
+</body>
+</html>
