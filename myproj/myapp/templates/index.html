@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link type="text/css" rel="stylesheet" href="{% static 'css/styles.css' %}">
+  
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form>
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <div class="input-group">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+    <div class="forgot-password">
+      <a href="#">Forgot password?</a>
+    </div>
+    <div class="signup-link">
+      Don't have an account? <a href="./register.html">Sign up</a>
+    </div>
+  </div>
+</body>
+</html>
