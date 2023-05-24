@@ -1,8 +1,10 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Registration</title>
-  <link rel="stylesheet" type="text/css" href="register.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
 </head>
 <body>
   <div class="container">
@@ -46,7 +48,7 @@
       </div>
     </form>
     <div class="login-link">
-      Already have an account? <a href="./index.html">Login</a>
+      Already have an account? <a href="/">Login</a>
     </div>
   </div>
 </body>
