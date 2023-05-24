@@ -9,38 +9,49 @@
 <body>
   <div class="container">
     <h2>Registration</h2>
-    <form>
+    <form method="post" action="{% url 'newregister' %}">
+      {% csrf_token %}
       <div class="input-group">
         <div class="input-row">
-          <input type="text" id="name" placeholder="Name" required>
-          <input type="tel" id="mobile" placeholder="Mobile Number" required>
+          <input type="text" name="name" placeholder="Name" required>
+          <input type="tel" name="mobile" placeholder="Mobile Number" required>
         </div>
       </div>
       <div class="input-group">
         <div class="input-row">
-          <input type="text" id="dob" placeholder="Date of Birth" onfocus="(this.type='date')" required>
-          <input type="email" id="email" placeholder="Email" required>
+          <input type="text" name="dob" placeholder="Date of Birth" onfocus="(this.type='date')" required>
+          <input type="email" name="email" placeholder="Email" required>
         </div>
       </div>
       <div class="input-group">
         <div class="input-row">
-          <input type="password" id="password" placeholder="Password" required>
-          <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <input type="password" name="confirm-password" placeholder="Confirm Password" required>
         </div>
       </div>
       <div class="input-group">
-        <textarea type="text" id="address" placeholder="Address" required></textarea>
+        <style>
+          textarea {
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 8px;
+            background-color: #0000000d; /* Adjust the color value to the desired shade of gray */
+
+          }
+        </style>
+        <textarea name="address" placeholder="Address" required rows="4" cols="30" style="resize: none;"></textarea>
       </div>
       <div class="input-group">
         <div class="input-row">
-          <input type="number" id="age" placeholder="Age" required>
-          <select id="gender" required>
+          <input type="number" name="age" placeholder="Age" required>
+          <select name="gender" required>
             <option value="" disabled selected>Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
-          <input type="text" id="blood-group" placeholder="Blood Group" required>
+          <input type="text" name ="blood-group" placeholder="Blood Group" required>
         </div>
       </div>
       <div class="input-group">
