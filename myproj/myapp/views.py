@@ -85,17 +85,18 @@ def forgotpass(request):
 
 def otpsend(request):
 
-
-
-    validate(request)
+    disable = validate(request)
         # email = request.POST['email']
         # otpfield = request.POST['otpfield']
         # new_password = request.POST['new-password']
         # confirm_password = request.POST['confirm-password']
         # otp = request.POST['otp']
         # reset = request.POST['reset']
+    if disable:
+        return render(request, 'forgot_password.html', {'otpsent': True})
+    else:
+        return render(request, 'forgot_password.html', {'otpsent': False})
 
-    return render(request, 'forgot_password.html', {'message': 'just opening the js'})
 
 def validate(request):
 
@@ -125,3 +126,4 @@ def validate(request):
         server.login(user, key)
         server.send_message(msg)
         server.quit()
+        return True
