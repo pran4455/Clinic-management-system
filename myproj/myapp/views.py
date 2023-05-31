@@ -78,27 +78,14 @@ def newregister(request):
     return render(request, 'register.html')
 
 
-def forgotpass(request):
-
-    return render(request, 'forgot_password.html', {'message': 'just opening the js'})
-
-
-def otpsend(request):
-
-    disable = validate(request)
-        # email = request.POST['email']
-        # otpfield = request.POST['otpfield']
-        # new_password = request.POST['new-password']
-        # confirm_password = request.POST['confirm-password']
-        # otp = request.POST['otp']
-        # reset = request.POST['reset']
-    if disable:
-        return render(request, 'forgot_password.html', {'otpsent': True})
-    else:
-        return render(request, 'forgot_password.html', {'otpsent': False})
+def forgotpassword(request):
+    sent_otp = send_otp(request)
+    if sent_otp:
+        return render(request, "validate_otp.html")
+    return render(request, 'forgot_password.html')
 
 
-def validate(request):
+def send_otp(request):
 
     if request.method == 'POST':
         email = request.POST['email']
@@ -127,3 +114,7 @@ def validate(request):
         server.send_message(msg)
         server.quit()
         return True
+    return False
+
+def validateotp(request):
+    return render(request, 'validate_otp.html')
