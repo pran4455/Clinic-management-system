@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Home</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/admin_home.css' %}">
+</head>
+<body>
+  <div class="container">
+    <a href="#">
+        <div class="logout">
+          <img src="{% static 'img/ico/logout.png' %}" alt="Log Out">
+          <span>Log Out</span>
+        </div>
+    </a>
+    <h2>Admin Home</h2>
+    <div class="admin-options">
+      <a href="#">
+        <div class="option">
+          <img src="{% static 'img/ico/view_reception.png' %}" alt="Receptionists">
+          <span>View Receptionists</span>
+        </div>
+      </a>
+      <a href="#">
+        <div class="option">
+          <img src="{% static 'img/ico/view_patient.png' %}" alt="Patients">
+          <span>View Patients</span>
+        </div>
+      </a>
+      <a href="#">
+        <div class="option">
+          <img src="{% static 'img/ico/view_doctor.png' %}" alt="Doctors">
+          <span>View Doctors</span>
+        </div>
+      </a>
+      <a href="#">
+        <div class="option">
+          <img src="{% static 'img/ico/edit_doctor.png' %}" alt="Edit Doctor">
+          <span>Edit Doctor</span>
+        </div>
+      </a>
+      <a href="#">
+        <div class="option">
+          <img src="{% static 'img/ico/edit_reception.png' %}" alt="Edit Receptionist">
+          <span>Edit Receptionist</span>
+        </div>
+      </a>
+      <a href="#">
+        <div class="option">
+          <img src="{% static 'img/ico/logs.png' %}" alt="View Logs">
+          <span>View Logs</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
