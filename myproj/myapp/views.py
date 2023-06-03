@@ -7,6 +7,8 @@ import os
 from email.message import EmailMessage
 import random
 
+RANDOM_OTP = 0
+
 def home(request):
     return render(request, 'index.html')
 
@@ -38,7 +40,7 @@ def login(request):
 
                             write.writerow([current_date, current_time])
 
-                        return render(request, 'success.html')  # Redirect to success page after successful login
+                        return render(request, 'homepage.html')  # Redirect to success page after successful login
                     else:
                         return render(request, 'index.html', {'message': 'Wrong password'})  # Display wrong password message
 
@@ -73,57 +75,42 @@ def newregister(request):
             writer = csv.writer(csvfile)
             writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group])
 
-        return render(request, 'register.html', {'message': 'new user registeration information stored successfully.'})
+        return render(request, 'register.html', {'message': 'New user registration information stored successfully.'})
     
     return render(request, 'register.html')
 
+'''
 
-def forgotpass(request):
+# send otp code:
 
-    return render(request, 'forgot_password.html', {'message': 'just opening the js'})
+if request.method == 'POST':
+    global RANDOM_OTP
+    email = request.POST['email']
+    user = os.getenv('EMAIL_USER')
+    key = 'rrsfsilblgzbiaep'
+    RANDOM_OTP = random.randint(100000, 999999)
+    msg = EmailMessage()
+    msg["Subject"] = "OTP Verification for Resetting your Password"
+    msg["From"] = user
+    msg["To"] = email
+    msg.set_content(
+        """Hello """
+        + str("User")
+        + """,
+                        This mail is in response to your request of resetting your clinic account password.
+
+                    Please enter or provide the following OTP: """
+        + str(RANDOM_OTP)
+        + """
+
+                    Note that this OTP is valid only for this instance. Requesting another OTP will make this OTP invalid. Incase you haven't requested to reset your password, contact your xyz. Thank You"""
+    )
+    server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+    server.login(user, key)
+    server.send_message(msg)
+    server.quit()
 
 
-def otpsend(request):
-
-    disable = validate(request)
-        # email = request.POST['email']
-        # otpfield = request.POST['otpfield']
-        # new_password = request.POST['new-password']
-        # confirm_password = request.POST['confirm-password']
-        # otp = request.POST['otp']
-        # reset = request.POST['reset']
-    if disable:
-        return render(request, 'forgot_password.html', {'otpsent': True})
-    else:
-        return render(request, 'forgot_password.html', {'otpsent': False})
+'''
 
 
-def validate(request):
-
-    if request.method == 'POST':
-        email = request.POST['email']
-        user = os.getenv('EMAIL_USER')
-        key = 'rrsfsilblgzbiaep'
-    
-        random_integer = random.randint(100000, 999999)
-        msg = EmailMessage()
-        msg["Subject"] = "OTP Verification for Reseting your Password"
-        msg["From"] = user
-        msg["To"] = email
-        msg.set_content(
-            """Hello """
-            + str("Pranaav")
-            + """,
-        This mail is in response to your request of resetting your clinic account password.
-
-    Please enter or provide the following OTP: """
-            + str(random_integer)
-            + """
-
-    Note that this OTP is valid only for this instance. Requesting another OTP will make this OTP invalid. Incase you haven't requested to reset your password, contact your xyz. Thank You"""
-        )
-        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-        server.login(user, key)
-        server.send_message(msg)
-        server.quit()
-        return True

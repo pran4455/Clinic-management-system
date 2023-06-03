@@ -33,7 +33,8 @@ form {
   margin-bottom: 20px;
 }
 
-input[type="email"] {
+input[type="number"],
+input[type="password"] {
   padding: 10px 15px;
   border-radius: 6px;
   border: none;
