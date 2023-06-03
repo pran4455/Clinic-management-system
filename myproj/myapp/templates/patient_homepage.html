@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Receptionist Home</title>
+  <title>Patient Home</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/patient_home.css' %}">
 </head>
 <body>
   <div class="container">
@@ -15,7 +15,7 @@
         <a href="#">Log Out </a>
       </div>
     </div>
-    <h2>Receptionist Home</h2>
+    <h2>Patient Home</h2>
     <div class="main-options">
       <a href="/appointments">
         <div class="option">
@@ -27,12 +27,6 @@
         <div class="option">
           <img src="{% static 'img/ico/transactions.png' %}" alt="Fee Transactions">
           <span>Transactions</span>
-        </div>
-      </a>
-      <a href="/patient-details">
-        <div class="option">
-          <img src="{% static 'img/ico/patient.png' %}" alt="Patient Details">
-          <span>Patient Details</span>
         </div>
       </a>
     </div>
