@@ -41,7 +41,7 @@ def login(request):
                             write.writerow([current_date, current_time])
 
                         return render(request, 'homepage.html')  # Redirect to success page after successful login
-                        # return render(request, 'doctor_homepage.html')
+                        # return render(request, 'doctor_homepage.html') # change to required html file
                     else:
                         return render(request, 'index.html', {'message': 'Wrong password'})  # Display wrong password message
 
