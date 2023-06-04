@@ -40,8 +40,8 @@ def login(request):
 
                             write.writerow([current_date, current_time])
 
-                        # return render(request, 'homepage.html')  # Redirect to success page after successful login
-                        return render(request, 'personal_details.html') # change to required html file
+                        return render(request, 'homepage.html')  # Redirect to success page after successful login
+                        # return render(request, 'patient_appointments.html') # change to required html file
                     else:
                         return render(request, 'index.html', {'message': 'Wrong password'})  # Display wrong password message
 
@@ -113,5 +113,8 @@ if request.method == 'POST':
 
 
 '''
+
+def testing(request):
+    return render(request, "doctor_view_patient_details.html")
 
 
