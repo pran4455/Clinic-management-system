@@ -1,5 +1,5 @@
 from django.shortcuts import render
-# from django.http import HttpResponse
+from django.http import HttpResponse
 import csv
 import datetime
 import smtplib
@@ -11,6 +11,8 @@ import random
 
 RANDOM_OTP = 0
 RESET_EMAIL = ''
+CURRENT_USER = ''
+CURRENT_PRIV = ''
 
 def home(request):
     return render(request, 'index.html')
@@ -41,10 +43,23 @@ def login(request):
                             current_time = date_time.time()
                             current_date = date_time.date()
 
-                            write.writerow([current_date, current_time])
+                            write.writerow([username, current_date, current_time])
 
-                        return render(request, 'homepage.html')  # Redirect to success page after successful login
-                        # return render(request, 'patient_appointments.html') # change to required html file
+                            global CURRENT_USER, CURRENT_PRIV
+                            CURRENT_USER = username
+
+                        if row[-2] == "admin":
+                            CURRENT_PRIV = "admin"
+                            return render(request, "admin_homepage.html")
+                        elif row[-2] == "rec":
+                            CURRENT_PRIV = "rec"
+                            return render(request, "homepage.html")
+                        elif row[-2] == "pat":
+                            CURRENT_PRIV = "pat"
+                            return render(request, "patient_homepage.html")
+                        elif row[-2] == "doc":
+                            CURRENT_PRIV = "doc"
+                            return render(request, "doctor_homepage.html") # Redirect to success page after successful login
                     else:
                         return render(request, 'index.html', {'alertmessage': 'Wrong password'})  # Display wrong password message
 
@@ -72,14 +87,12 @@ def newregister(request):
         with open('register.csv', 'r') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
-                print(row)
-                print(email, row[3])
                 if email == row[3]:
                     return render(request, 'register.html', {'alertmessage': 'E-mail already exists.'})
 
         with open('register.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group])
+            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat"])
 
         return render(request, 'index.html', {'alertmessage': 'New user registration information stored successfully.'})
 
@@ -93,6 +106,11 @@ def get_email(request):
             if email not in [row[3] for row in reader]:
                 return render(request, 'forgot_password.html', {'message':'Email not found!'})
             else:
+                name = ""
+                for row in reader:
+                    if row[3] == email:
+                        name = row[0]
+                        break
                 global RANDOM_OTP, RESET_EMAIL
                 RESET_EMAIL = email
                 user = os.getenv('EMAIL_USER')
@@ -104,7 +122,7 @@ def get_email(request):
                 msg["To"] = email
                 msg.set_content(
                     """Hello """
-                    + str("User")
+                    + str(name)
                     + """,
                                         This mail is in response to your request of resetting your clinic account password.
         
@@ -149,6 +167,53 @@ def validate_otp(request):
     else:
         return render(request, "validate_otp.html")
 
+
+def personal_details(request):
+    with open("register.csv", "r") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[3] == CURRENT_USER:
+                priv = ""
+                if row[-2] == "admin":
+                    priv = "Administrator"
+                    userhome = "admin"
+                elif row[-2] == "rec":
+                    priv = "Receptionist"
+                    userhome = "receptionist"
+                elif row[-2] == "pat":
+                    priv = "Patient"
+                    userhome = "patient"
+                elif row[-2] == "doc":
+                    priv = "Doctor"
+                    userhome = "doctor"
+
+                data = {
+                    "uniqueid" : row[-1],
+                    "name": row[0],
+                    "username": row[3],
+                    "phone": row[1],
+                    "gender": row[7],
+                    "bloodgroup": row[8],
+                    "dob": row[2],
+                    "address":row[5],
+                    "age": row[6],
+                    "priv": priv,
+                    "userhome": userhome
+
+                }
+                return render(request, "personal_details.html", data)
+
+def admin_home(request):
+    return render(request, "admin_homepage.html")
+
+def patient_home(request):
+    return render(request, "patient_homepage.html")
+
+def receptionist_home(request):
+    return render(request, "homepage.html")
+
+def doctor_home(request):
+    return render(request, "doctor_homepage.html")
 
 def testing(request):
     return render(request, "enter_prescription.html")
