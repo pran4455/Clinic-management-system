@@ -150,12 +150,6 @@ def validate_otp(request):
         return render(request, "validate_otp.html")
 
 
-
-
-
-
-
-
 def testing(request):
     return render(request, "enter_prescription.html")
 
