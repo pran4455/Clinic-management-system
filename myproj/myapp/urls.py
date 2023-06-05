@@ -6,8 +6,11 @@ from django.shortcuts import redirect
 from . import views
 
 urlpatterns = [
-    # path('',views.home, name = 'home'),
-    path('', views.testing, name='testing'),
+    path('',views.home, name = 'home'),
+    # path('', views.testing, name='testing'),
     path('register/', views.newregister, name='newregister'),
     path('login/', views.login, name='login'),
+    path('forgot-password/', views.get_email, name="get_email"),
+    path('validate-otp/', views.validate_otp, name="validate_otp"),
+    # path('validate-otp/', lambda request: redirect('/clinic/forgot-password/'), name="validate_otp")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

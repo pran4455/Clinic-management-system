@@ -161,4 +161,18 @@
     background-color: #f0f0f0;
     box-sizing: border-box;
   }
-  
+
+  .error-message {
+      color: red;
+    }
+
+  textarea {
+      border: none;
+      border-radius: 6px;
+      background-color: #0000000d; /* Adjust the color value to the desired shade of gray */
+      font-family: Arial, sans-serif;
+      resize: None;
+      height: 75px;
+      width: 360px;
+      padding: 10px 15px;
+    }
