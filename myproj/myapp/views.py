@@ -1,14 +1,13 @@
-import pandas as pd
 from django.shortcuts import render
-from django.http import HttpResponse
+# from django.http import HttpResponse
 import csv
 import datetime
 import smtplib
 import os
 from email.message import EmailMessage
 import random
-import time
-from django.contrib import messages
+# import time
+# from django.contrib import messages
 
 RANDOM_OTP = 0
 RESET_EMAIL = ''
@@ -97,7 +96,7 @@ def get_email(request):
                 global RANDOM_OTP, RESET_EMAIL
                 RESET_EMAIL = email
                 user = os.getenv('EMAIL_USER')
-                key = 'rrsfsilblgzbiaep'
+                key = 'rrsfsilblgzbiaep' # use os.getenv
                 RANDOM_OTP = random.randint(100000, 999999)
                 msg = EmailMessage()
                 msg["Subject"] = "OTP Verification for Resetting your Password"
