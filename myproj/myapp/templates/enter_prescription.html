@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enter Prescription</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/enter_prescription.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Enter Prescription</h2>
+    <form>
+      <div class="input-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter name">
+      </div>
+      <div class="input-group">
+        <label for="unique-id">Unique ID:</label>
+        <input type="text" id="unique-id" name="unique-id" placeholder="Enter unique ID">
+      </div>
+      <div class="input-group">
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" placeholder="Enter age">
+      </div>
+      <div class="input-group">
+        <label for="sex">Sex:</label>
+        <input type="text" id="sex" name="sex" placeholder="Enter sex">
+      </div>
+      <div class="input-group">
+        <label for="prescription">Medical Prescription:</label>
+        <textarea rows="5" cols="40" id="prescription" name="prescription" placeholder="Enter medical prescription"></textarea>
+      </div>
+      <div class="input-group">
+        <label for="treatment">Treatment:</label>
+        <textarea rows="5" cols="40" id="treatment" name="treatment" placeholder="Enter treatment"></textarea>
+      </div>
+      <div class="input-group">
+        <label for="advice">Treatment Advice:</label>
+        <textarea rows="5" cols="40" id="advice" name="advice" placeholder="Enter treatment advice"></textarea>
+      </div>
+      <div class="input-group">
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

@@ -46,7 +46,7 @@ def login(request):
                         return render(request, 'index.html', {'message': 'Wrong password'})  # Display wrong password message
 
             return render(request, 'index.html', {'message': 'Username not found'})  # Display username not found message
-    
+
     return render(request, 'index.html')
 
 
@@ -65,7 +65,7 @@ def newregister(request):
 
         if password != confirm_password:
             return render(request, 'register.html', {'error_message': 'Passwords do not match.'})
-        
+
         with open('register.csv', 'a+') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
@@ -77,7 +77,7 @@ def newregister(request):
             writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group])
 
         return render(request, 'register.html', {'message': 'New user registration information stored successfully.'})
-    
+
     return render(request, 'register.html')
 
 '''
@@ -115,6 +115,6 @@ if request.method == 'POST':
 '''
 
 def testing(request):
-    return render(request, "doctor_view_patient_details.html")
+    return render(request, "enter_prescription.html")
 
 
