@@ -11,46 +11,58 @@
     <form>
       <div class="grid-container">
         <div class="grid-item">
-          <label for="patient-id">Unique ID</label>
-          <input type="text" id="patient-id" name="patient-id" placeholder="Unique ID">
+          <label for="unique-id">Unique ID</label>
+          <input type="text" id="unique-id" name="unique-id" placeholder="Unique ID" readonly="true">
         </div>
         <div class="grid-item">
           <label for="full-name">Full Name</label>
-          <input type="text" id="full-name" name="full-name" placeholder="Full Name">
+          <input type="text" id="full-name" name="full-name" placeholder="Full Name" readonly="true">
         </div>
         <div class="grid-item">
           <label for="phone-number">Phone Number</label>
-          <input type="text" id="phone-number" name="phone-number" placeholder="Phone Number">
+          <input type="text" id="phone-number" name="phone-number" placeholder="Phone Number" readonly="true">
         </div>
         <div class="grid-item">
           <label for="gender">Gender</label>
-          <input type="text" id="gender" name="gender" placeholder="Gender">
+          <input type="text" id="gender" name="gender" placeholder="Gender" readonly="true">
         </div>
         <div class="grid-item">
           <label for="blood-group">Blood Group</label>
-          <input type="text" id="blood-group" name="blood-group" placeholder="Blood Group">
+          <input type="text" id="blood-group" name="blood-group" placeholder="Blood Group" readonly="true">
         </div>
         <div class="grid-item">
           <label for="last-appointment">Last Appointment</label>
-          <input type="text" id="last-appointment" name="last-appointment" placeholder="Last Appointment">
+          <input type="text" id="last-appointment" name="last-appointment" placeholder="Last Appointment" readonly="true">
         </div>
         <div class="grid-item">
           <label for="upcoming-appointment">Upcoming Appointment</label>
-          <input type="text" id="upcoming-appointment" name="upcoming-appointment" placeholder="Upcoming Appointment">
+          <input type="text" id="upcoming-appointment" name="upcoming-appointment" placeholder="Upcoming Appointment" readonly="true">
         </div>
         <div class="grid-item">
           <label for="doctor-name">Doctor Name</label>
-          <input type="text" id="doctor-name" name="doctor-name" placeholder="Doctor Name">
+          <input type="text" id="doctor-name" name="doctor-name" placeholder="Doctor Name" readonly="true">
         </div>
       </div>
         <div class="grid-item">
           <label for="address">Address</label>
-          <textarea id="address" name="address" placeholder="Address"></textarea>
+          <textarea id="address" name="address" placeholder="Address" readonly="true" rows="4" cols="40" style="resize: none"></textarea>
         </div>
     </form>
     <div class="home-link">
-      <a href="index.html">Back to Home Page</a>
+      <a href="/clinic/receptionist/">Back to Home Page</a>
     </div>
   </div>
+<script>
+    document.getElementById("unique-id").value = '{{uniqueid}}';
+    document.getElementById("full-name").value = '{{name}}';
+    document.getElementById("phone-number").value = '{{phone}}';
+    document.getElementById("gender").value = '{{gender}}';
+    document.getElementById("address").value = '{{address}}';
+    document.getElementById("upcoming-appointment").value = '{{upcoming_appointment}}';
+    document.getElementById("last-appointment").value = '{{last_appointment}}';
+    document.getElementById("doctor-name").value = '{{doctor_name}}';
+    document.getElementById("blood-group").value = '{{blood_group}}';
+  </script>
+
 </body>
 </html>

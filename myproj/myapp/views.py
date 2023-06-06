@@ -76,9 +76,7 @@ def newregister(request):
         email = request.POST['email']
         password = request.POST['password']
         confirm_password = request.POST['confirm-password']
-        # print(list(request.POST['address']))
         address = request.POST['address'].replace("\r\n", ",")
-        # print(address)
         age = request.POST['age']
         gender = request.POST['gender']
         blood_group = request.POST['blood-group']
@@ -99,6 +97,14 @@ def newregister(request):
         with open('register.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random])
+
+        with open('patients.csv', 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random])
+
+        with open(f'./myapp/csv/{name}.csv', 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random, "None", "None", "None"])
 
         return render(request, 'index.html', {'alertmessage': 'New user registration information stored successfully.'})
 
@@ -208,6 +214,7 @@ def personal_details(request):
 
                 }
                 return render(request, "personal_details.html", data)
+        return render(request, "personal_details.html")
 
 def admin_home(request):
     return render(request, "admin_homepage.html")
@@ -221,7 +228,59 @@ def receptionist_home(request):
 def doctor_home(request):
     return render(request, "doctor_homepage.html")
 
+def receptionist_search_patient(request):
+    if request.method == "POST":
+        patient_id = request.POST.get("patientid")
+        patient_name = request.POST.get("patientname")
+        current_name = ''
+        if patient_id:
+            with open("register.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[-1].strip() == patient_id.strip():
+                        current_name = row[0]
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    data = {
+                        "uniqueid": row[-4],
+                        "name": row[0],
+                        "phone": row[1],
+                        "gender": row[7],
+                        "last_appointment": row[-3],
+                        "address": row[5],
+                        "upcoming_appointment": row[-2],
+                        "doctor_name": row[-1],
+                        "blood_group": row[8]
+                    }
+                    break
+
+            return render(request, "receptionist_view_patient_details.html", data)
+        elif patient_name:
+            current_name = patient_name
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    data = {
+                        "uniqueid": row[-4],
+                        "name": row[0],
+                        "phone": row[1],
+                        "gender": row[7],
+                        "last_appointment": row[-3],
+                        "address": row[5],
+                        "upcoming_appointment": row[-2],
+                        "doctor_name": row[-1],
+                        "blood_group": row[8]
+                    }
+                    break
+
+            return render(request, "receptionist_view_patient_details.html", data)
+        else:
+            return render(request, "receptionist_search_patient.html", {"alertmessage": "Patient not found!"})
+
+    return render(request, "receptionist_search_patient.html")
+
 def testing(request):
-    return render(request, "enter_prescription.html")
+    return render(request, "receptionist_view_patient_details.html")
 
 
