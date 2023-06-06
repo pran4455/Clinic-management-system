@@ -96,7 +96,7 @@ def newregister(request):
 
         with open('register.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random)])
+            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random])
 
         return render(request, 'index.html', {'alertmessage': 'New user registration information stored successfully.'})
 
