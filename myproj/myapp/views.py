@@ -90,9 +90,13 @@ def newregister(request):
                 if email == row[3]:
                     return render(request, 'register.html', {'alertmessage': 'E-mail already exists.'})
 
+        uniqueid_random = str(random.randint(100000, 999999))
+        while uniqueid_random in [row[-1] for row in reader]:
+            uniqueid_random = str(random.randint(100000, 999999))
+
         with open('register.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat"])
+            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random)])
 
         return render(request, 'index.html', {'alertmessage': 'New user registration information stored successfully.'})
 
