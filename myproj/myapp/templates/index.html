@@ -1,15 +1,10 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Login</title>
   <link type="text/css" rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <style>
-    .error-message {
-      color: red;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -38,5 +33,10 @@
       Don't have an account? <a href="/clinic/register/">Sign up</a>
     </div>
   </div>
+  {% if alertmessage %}
+  <script>
+    alert('{{alertmessage}}');
+  </script>
+  {% endif %}
 </body>
 </html>

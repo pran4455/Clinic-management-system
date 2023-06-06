@@ -5,11 +5,6 @@
 <head>
   <title>Registration</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
-  <style>
-    .error-message {
-      color: red;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -41,20 +36,6 @@
         </div>
       </div>
       <div class="input-group">
-        <style>
-          textarea {
-            border: none;
-            border-radius: 8px;
-            background-color: #0000000d; /* Adjust the color value to the desired shade of gray */
-            font-family: Arial, sans-serif;
-            resize: None;
-            height: 75px;
-            width: 360px;
-            padding: 10px 15px;
-            border-radius: 6px;
-            box-sizing: border-box;
-          }
-        </style>
         <textarea name="address" placeholder="Address" required rows="4" cols="30" style="resize: none;"></textarea>
       </div>
       <div class="input-group">
@@ -62,9 +43,9 @@
           <input type="number" name="age" placeholder="Age" required>
           <select name="gender" required>
             <option value="" disabled selected>Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
           <input type="text" name ="blood-group" placeholder="Blood Group" required>
         </div>
@@ -77,5 +58,10 @@
       Already have an account? <a href="/clinic/login">Login</a>
     </div>
   </div>
+  {% if alertmessage %}
+  <script>
+    alert('{{alertmessage}}');
+  </script>
+  {% endif %}
 </body>
 </html>

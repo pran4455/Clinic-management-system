@@ -1,2 +1,4 @@
-p,1231,1111-11-15,pran@g,15,ra,15,male,B
-Test,0123456789,2000-01-01,absolute.tech4us@gmail.com,admin123,TestAddress,23,male,O+
+p,1231,1111-11-15,pran@g,admin,ra,15,Male,B,admin,adm001
+Test,0123456789,2000-01-01,absolute.tech4us@gmail.com,admin123,TestAddress,23,Male,O+,rec,rec001
+TestName,0123456789,2000-01-01,test@test.com,test,testaddress,0,Male,test,pat,pat001
+TestDoc,1234567890,2002-02-02,doctor@doctor.com,doctor,doctoraddress,10,Female,bg,doc,doc001
