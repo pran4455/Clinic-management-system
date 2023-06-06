@@ -33,7 +33,7 @@ def login(request):
             for row in reader:
                 stored_username = row[3]
                 stored_password = row[4]
-
+                print(row)
                 if username == stored_username:
                     if password == stored_password:
                         with open('logs.csv', 'a') as logs:
