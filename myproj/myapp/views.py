@@ -33,7 +33,7 @@ def login(request):
             for row in reader:
                 stored_username = row[3]
                 stored_password = row[4]
-                print(row)
+
                 if username == stored_username:
                     if password == stored_password:
                         with open('logs.csv', 'a') as logs:
@@ -76,8 +76,7 @@ def newregister(request):
         email = request.POST['email']
         password = request.POST['password']
         confirm_password = request.POST['confirm-password']
-        address = request.POST['address'].replace('\n',',')
-        address.replace('\r',',')
+        address = request.POST['address'].replace("\r\n", ",")
         age = request.POST['age']
         gender = request.POST['gender']
         blood_group = request.POST['blood-group']
@@ -103,6 +102,7 @@ def newregister(request):
         return render(request, 'index.html', {'alertmessage': 'New user registration information stored successfully.'})
 
     return render(request, 'register.html')
+
 
 def get_email(request):
     if request.method == "POST":
@@ -144,6 +144,7 @@ def get_email(request):
                 server.quit()
                 return render(request, 'validate_otp.html')
     return render(request, 'forgot_password.html')
+
 
 def validate_otp(request):
     if request.method == "POST":
@@ -223,5 +224,3 @@ def doctor_home(request):
 
 def testing(request):
     return render(request, "enter_prescription.html")
-
-
