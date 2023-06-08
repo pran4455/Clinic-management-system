@@ -81,6 +81,7 @@ def newregister(request):
         gender = request.POST['gender']
         blood_group = request.POST['blood-group']
 
+
         if password != confirm_password:
             return render(request, 'register.html', {'alertmessage': 'Passwords do not match.'})
 
@@ -109,6 +110,7 @@ def newregister(request):
         return render(request, 'index.html', {'alertmessage': 'New user registration information stored successfully.'})
 
     return render(request, 'register.html')
+
 
 def get_email(request):
     if request.method == "POST":
@@ -150,6 +152,7 @@ def get_email(request):
                 server.quit()
                 return render(request, 'validate_otp.html')
     return render(request, 'forgot_password.html')
+
 
 def validate_otp(request):
     if request.method == "POST":
