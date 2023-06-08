@@ -81,7 +81,7 @@ def newregister(request):
         email = request.POST['email']
         password = request.POST['password']
         confirm_password = request.POST['confirm-password']
-        address = request.POST['address'].replace("\r\n", ",")
+        address = request.POST['address'].replace(",", "-").replace("\r\n", ";")
         age = request.POST['age']
         gender = request.POST['gender']
         blood_group = request.POST['blood-group']
@@ -330,13 +330,38 @@ def doctor_search_patient(request):
 
                 }
 
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
                 reader = csv.reader(csvfile)
-                try:
-                    next(reader)
-                    next(reader)
-                except StopIteration:
+                if len([row for row in reader]) < 2:
                     data["alertmessage"] = "Patient details are not entered! Please enter them now!"
                     return render(request, "doctor_add_patient_details.html", data)
+
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                next(reader)
+                details = next(reader)
+
+                medical_history = details[6]
+                dental_carries = details[7]
+                missing_teeth = details[8]
+                allergy = details[9]
+                examination = details[10]
+                abrasions = details[11]
+                treatment_advice = details[12]
+                treatment = details[13]
+                treatment_charges = details[14]
+                newdata = {
+                    "medical_history": medical_history,
+                    "dental_carries": dental_carries,
+                    "missing_teeth": missing_teeth,
+                    "allergy": allergy,
+                    "examination": examination,
+                    "abrasions": abrasions,
+                    "treatment_advice": treatment_advice,
+                    "treatment": treatment,
+                    "treatment_charges": treatment_charges,
+                }
+                data.update(newdata)
                 return render(request, "doctor_view_patient_details.html", data)
 
 
@@ -369,22 +394,64 @@ def doctor_search_patient(request):
 
                 }
 
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
                 reader = csv.reader(csvfile)
-                try:
-                    next(reader)
-                    next(reader)
-                except StopIteration:
+                if len([row for row in reader]) < 2:
                     data["alertmessage"] = "Patient details are not entered! Please enter them now!"
                     return render(request, "doctor_add_patient_details.html", data)
+
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                next(reader)
+                details = next(reader)
+
+                medical_history = details[6]
+                dental_carries = details[7]
+                missing_teeth = details[8]
+                allergy = details[9]
+                examination = details[10]
+                abrasions = details[11]
+                treatment_advice = details[12]
+                treatment = details[13]
+                treatment_charges = details[14]
+                newdata = {
+                    "medical_history": medical_history,
+                    "dental_carries": dental_carries,
+                    "missing_teeth": missing_teeth,
+                    "allergy": allergy,
+                    "examination": examination,
+                    "abrasions": abrasions,
+                    "treatment_advice": treatment_advice,
+                    "treatment": treatment,
+                    "treatment_charges": treatment_charges,
+                }
+                data.update(newdata)
                 return render(request, "doctor_view_patient_details.html", data)
 
-    else:
-        return render(request, "doctor_search_patient.html", {"alertmessage": "Please fill any one field!"})
+        else:
+            return render(request, "doctor_search_patient.html", {"alertmessage": "Please fill any one field!"})
 
     return render(request, "doctor_search_patient.html")
 
 
 def add_patient_details(request):
+    if request.method == "POST":
+        uniqueid = request.POST.get("unique-id")
+        name = request.POST.get("full-name")
+        age = request.POST.get("age")
+        sex = request.POST.get("sex")
+        phone = request.POST.get("phone-number")
+        address = request.POST.get("address")
+        medical_history = request.POST.get("medical-history").replace(",", "-").replace(",", "-").replace("\r\n", ";")
+        dental_carries = request.POST.get("dental-carries").replace(",", "-").replace("\r\n", ";")
+        missing_teeth = request.POST.get("missing-teeth").replace(",", "-").replace("\r\n", ";")
+        allergy = request.POST.get("allergy").replace(",", "-").replace("\r\n", ";")
+        abrasions = request.POST.get("abrasions").replace(",", "-").replace("\r\n", ";")
+        with open(f"./myapp/csv/{name}.csv", "a") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([uniqueid, name, age, sex, phone, address, medical_history, dental_carries, missing_teeth, allergy, "None", abrasions, "None", "None", "None"])
+        return render(request, "doctor_search_patient.html", {"alertmessage": "Details saved successfully!"})
+
     return render(request, "doctor_add_patient_details.html")
 
 
