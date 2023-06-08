@@ -6,6 +6,7 @@ import smtplib
 import os
 from email.message import EmailMessage
 import random
+
 # import time
 # from django.contrib import messages
 
@@ -13,6 +14,7 @@ RANDOM_OTP = 0
 RESET_EMAIL = ''
 CURRENT_USER = ''
 CURRENT_PRIV = ''
+
 
 def home(request):
     return render(request, 'index.html')
@@ -59,11 +61,14 @@ def login(request):
                             return render(request, "patient_homepage.html")
                         elif row[-2] == "doc":
                             CURRENT_PRIV = "doc"
-                            return render(request, "doctor_homepage.html") # Redirect to success page after successful login
+                            return render(request,
+                                          "doctor_homepage.html")  # Redirect to success page after successful login
                     else:
-                        return render(request, 'index.html', {'alertmessage': 'Wrong password'})  # Display wrong password message
+                        return render(request, 'index.html',
+                                      {'alertmessage': 'Wrong password'})  # Display wrong password message
 
-            return render(request, 'index.html', {'alertmessage': 'Username not found'})  # Display username not found message
+            return render(request, 'index.html',
+                          {'alertmessage': 'Username not found'})  # Display username not found message
 
     return render(request, 'index.html')
 
@@ -81,7 +86,6 @@ def newregister(request):
         gender = request.POST['gender']
         blood_group = request.POST['blood-group']
 
-
         if password != confirm_password:
             return render(request, 'register.html', {'alertmessage': 'Passwords do not match.'})
 
@@ -97,15 +101,19 @@ def newregister(request):
 
         with open('register.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random])
+            writer.writerow(
+                [name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random])
 
         with open('patients.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random])
+            writer.writerow(
+                [name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random])
 
         with open(f'./myapp/csv/{name}.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random, "None", "None", "None"])
+            writer.writerow(
+                [name, mobile, dob, email, password, address, age, gender, blood_group, "pat", uniqueid_random, "None",
+                 "None", "None"])
 
         return render(request, 'index.html', {'alertmessage': 'New user registration information stored successfully.'})
 
@@ -118,7 +126,7 @@ def get_email(request):
         with open("register.csv", "r") as csvfile:
             reader = csv.reader(csvfile)
             if email not in [row[3] for row in reader]:
-                return render(request, 'forgot_password.html', {'message':'Email not found!'})
+                return render(request, 'forgot_password.html', {'message': 'Email not found!'})
             else:
                 name = ""
                 for row in reader:
@@ -128,7 +136,7 @@ def get_email(request):
                 global RANDOM_OTP, RESET_EMAIL
                 RESET_EMAIL = email
                 user = os.getenv('EMAIL_USER')
-                key = 'rrsfsilblgzbiaep' # use os.getenv
+                key = 'rrsfsilblgzbiaep'  # use os.getenv
                 RANDOM_OTP = random.randint(100000, 999999)
                 msg = EmailMessage()
                 msg["Subject"] = "OTP Verification for Resetting your Password"
@@ -139,11 +147,11 @@ def get_email(request):
                     + str(name)
                     + """,
                                         This mail is in response to your request of resetting your clinic account password.
-        
+
                                     Please enter or provide the following OTP: """
                     + str(RANDOM_OTP)
                     + """
-        
+
                                     Note that this OTP is valid only for this instance. Requesting another OTP will make this OTP invalid. Incase you haven't requested to reset your password, contact your xyz. Thank You"""
                 )
                 server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
@@ -178,7 +186,7 @@ def validate_otp(request):
                 writer = csv.writer(csvfile)
                 writer.writerows(rows)
             csvfile.close()
-            return render(request, "index.html", {"alertmessage":"Reset Password Successful!"})
+            return render(request, "index.html", {"alertmessage": "Reset Password Successful!"})
     else:
         return render(request, "validate_otp.html")
 
@@ -203,14 +211,14 @@ def personal_details(request):
                     userhome = "doctor"
 
                 data = {
-                    "uniqueid" : row[-1],
+                    "uniqueid": row[-1],
                     "name": row[0],
                     "username": row[3],
                     "phone": row[1],
                     "gender": row[7],
                     "bloodgroup": row[8],
                     "dob": row[2],
-                    "address":row[5],
+                    "address": row[5],
                     "age": row[6],
                     "priv": priv,
                     "userhome": userhome
@@ -219,17 +227,22 @@ def personal_details(request):
                 return render(request, "personal_details.html", data)
         return render(request, "personal_details.html")
 
+
 def admin_home(request):
     return render(request, "admin_homepage.html")
+
 
 def patient_home(request):
     return render(request, "patient_homepage.html")
 
+
 def receptionist_home(request):
     return render(request, "homepage.html")
 
+
 def doctor_home(request):
     return render(request, "doctor_homepage.html")
+
 
 def receptionist_search_patient(request):
     if request.method == "POST":
@@ -283,7 +296,99 @@ def receptionist_search_patient(request):
 
     return render(request, "receptionist_search_patient.html")
 
+
+def doctor_search_patient(request):
+    if request.method == "POST":
+        patient_id = request.POST.get("patientid")
+        patient_name = request.POST.get("patientname")
+        current_name = ''
+        if patient_id:
+            with open("register.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[-1].strip() == patient_id.strip():
+                        current_name = row[0]
+                        break
+                else:
+                    return render(request, "doctor_search_patient.html", {"alertmessage": "Patient not found!"})
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                basic_details = next(reader)
+                uniqueid = basic_details[-4]
+                name = basic_details[0]
+                age = basic_details[6]
+                sex = basic_details[8]
+                phone = basic_details[1]
+                address = basic_details[5]
+                data = {
+                    "uniqueid": uniqueid,
+                    "name": name,
+                    "age": age,
+                    "sex": sex,
+                    "phone": phone,
+                    "address": address,
+
+                }
+
+                reader = csv.reader(csvfile)
+                try:
+                    next(reader)
+                    next(reader)
+                except StopIteration:
+                    data["alertmessage"] = "Patient details are not entered! Please enter them now!"
+                    return render(request, "doctor_add_patient_details.html", data)
+                return render(request, "doctor_view_patient_details.html", data)
+
+
+        elif patient_name:
+            with open("register.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[0].strip() == patient_name.strip():
+                        current_name = row[0]
+                        break
+                else:
+                    return render(request, "doctor_search_patient.html", {"alertmessage": "Patient not found!"})
+            current_name = patient_name
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                basic_details = next(reader)
+                uniqueid = basic_details[-4]
+                name = basic_details[0]
+                age = basic_details[6]
+                sex = basic_details[8]
+                phone = basic_details[1]
+                address = basic_details[5]
+                data = {
+                    "uniqueid": uniqueid,
+                    "name": name,
+                    "age": age,
+                    "sex": sex,
+                    "phone": phone,
+                    "address": address,
+
+                }
+
+                reader = csv.reader(csvfile)
+                try:
+                    next(reader)
+                    next(reader)
+                except StopIteration:
+                    data["alertmessage"] = "Patient details are not entered! Please enter them now!"
+                    return render(request, "doctor_add_patient_details.html", data)
+                return render(request, "doctor_view_patient_details.html", data)
+
+    else:
+        return render(request, "doctor_search_patient.html", {"alertmessage": "Please fill any one field!"})
+
+    return render(request, "doctor_search_patient.html")
+
+
+def add_patient_details(request):
+    return render(request, "doctor_add_patient_details.html")
+
+
 def testing(request):
-    return render(request, "receptionist_view_patient_details.html")
+    return render(request, "doctor_add_patient_details.html")
 
 
