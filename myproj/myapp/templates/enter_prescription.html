@@ -8,7 +8,8 @@
 <body>
   <div class="container">
     <h2>Enter Prescription</h2>
-    <form>
+    <form method="post" action="{% url 'add_prescription_details' %}">
+      {% csrf_token %}
       <div class="input-group">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" placeholder="Enter name" readonly>

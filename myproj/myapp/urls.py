@@ -23,6 +23,7 @@ urlpatterns = [
     path('doctor/doctor-search-patient/', views.doctor_search_patient, name="doctor_search_patient"),
     path('doctor/add-patient-details/', views.add_patient_details, name="add_patient_details"),
     path('doctor/doctor-prescription-search-patient/', views.doctor_prescription_search_patient, name="doctor_prescription_search_patient"),
+    path('doctor/add-prescription-details/', views.add_prescription_details, name="add_prescription_details"),
     path('logout/', LogoutView.as_view(next_page='/'), name="logout"),
     # path('validate-otp/', lambda request: redirect('/clinic/forgot-password/'), name="validate_otp")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

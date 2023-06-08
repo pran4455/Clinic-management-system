@@ -443,7 +443,7 @@ def add_patient_details(request):
         missing_teeth = request.POST.get("missing-teeth").replace(",", "-").replace("\r\n", ";")
         allergy = request.POST.get("allergy").replace(",", "-").replace("\r\n", ";")
         abrasions = request.POST.get("abrasions").replace(",", "-").replace("\r\n", ";")
-        with open(f"./myapp/csv/{name}.csv", "a") as csvfile:
+        with open(f"./myapp/csv/{name}.csv", "a", newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow([uniqueid, name, age, sex, phone, address, prescription, dental_carries, missing_teeth, allergy, "None", abrasions, "None", "None", "None"])
         return render(request, "doctor_search_patient.html", {"alertmessage": "Details saved successfully!"})
@@ -534,18 +534,19 @@ def doctor_prescription_search_patient(request):
 def add_prescription_details(request):
     if request.method == "POST":
         current_name = request.POST.get("name")
-        medical_prescription = request.POST.get("prescription").replace("-", ",").replace(";", "\\n"),
-        examination = request.POST.get("examination").replace("-", ",").replace(";", "\\n"),
-        treatment = request.POST.get("treatment").replace("-", ",").replace(";", "\\n"),
-        advice = request.POST.get("advice").replace("-", ",").replace(";", "\\n"),
-        with open(f"./myapp/csv/{current_name}.csv", "a") as csvfile:
+        medical_prescription = request.POST.get("prescription").replace("-", ",").replace(";", "\\n")
+        examination = request.POST.get("examination").replace("-", ",").replace(";", "\\n")
+        treatment = request.POST.get("treatment").replace("-", ",").replace(";", "\\n")
+        advice = request.POST.get("advice").replace("-", ",").replace(";", "\\n")
+        print(medical_prescription, examination, treatment, advice)
+        with open(f"./myapp/csv/{current_name}.csv", "a", newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow([examination, medical_prescription, treatment, advice])
 
         with open(f"./myapp/csv/{current_name}.csv", "r") as oldfile, open(f"./myapp/csv/{current_name}.tmp",
-                                                                           "w") as newfile:
+                                                                           "w", newline='') as newfile:
             reader = csv.reader(oldfile)
-            writer = csv.writer(newfile)
+            writer = csv.writer(newfile, quoting=csv.QUOTE_NONE, escapechar='\\')
 
             myrow = [row for row in reader]
 
@@ -555,16 +556,15 @@ def add_prescription_details(request):
             myrow[1][12] = treatment
             myrow[1][13] = advice
 
-            writer.writerows(myrow)
+            print(myrow)
+
+            for row in myrow:
+                writer.writerow(row)
 
         os.replace(f"./myapp/csv/{current_name}.tmp", f"./myapp/csv/{current_name}.csv")
+        return render(request, "doctor_prescription_search_patient.html", {"alertmessage": "Prescription added successfully!"})
+    return render(request, "enter_prescription.html")
 
-
-
-
-
-    else:
-        return render(request, "enter_prescription.html")
 def testing(request):
     return render(request, "enter_prescription.html")
 
