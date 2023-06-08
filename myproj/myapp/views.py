@@ -218,7 +218,7 @@ def personal_details(request):
                     "gender": row[7],
                     "bloodgroup": row[8],
                     "dob": row[2],
-                    "address": row[5],
+                    "address": row[5].replace("-", ",").replace(";", "\\n"),
                     "age": row[6],
                     "priv": priv,
                     "userhome": userhome
@@ -264,7 +264,7 @@ def receptionist_search_patient(request):
                         "phone": row[1],
                         "gender": row[7],
                         "last_appointment": row[-3],
-                        "address": row[5],
+                        "address": row[5].replace("-", ",").replace(";", "\\n"),
                         "upcoming_appointment": row[-2],
                         "doctor_name": row[-1],
                         "blood_group": row[8]
@@ -283,7 +283,7 @@ def receptionist_search_patient(request):
                         "phone": row[1],
                         "gender": row[7],
                         "last_appointment": row[-3],
-                        "address": row[5],
+                        "address": row[5].replace("-", ",").replace(";", "\\n"),
                         "upcoming_appointment": row[-2],
                         "doctor_name": row[-1],
                         "blood_group": row[8]
@@ -319,7 +319,7 @@ def doctor_search_patient(request):
                 age = basic_details[6]
                 sex = basic_details[8]
                 phone = basic_details[1]
-                address = basic_details[5]
+                address = basic_details[5].replace("-", ",").replace(";", "\\n")
                 data = {
                     "uniqueid": uniqueid,
                     "name": name,
@@ -341,15 +341,15 @@ def doctor_search_patient(request):
                 next(reader)
                 details = next(reader)
 
-                medical_history = details[6]
-                dental_carries = details[7]
-                missing_teeth = details[8]
-                allergy = details[9]
-                examination = details[10]
-                abrasions = details[11]
-                treatment_advice = details[12]
-                treatment = details[13]
-                treatment_charges = details[14]
+                medical_history = details[6].replace("-", ",").replace(";", "\\n")
+                dental_carries = details[7].replace("-", ",").replace(";", "\\n")
+                missing_teeth = details[8].replace("-", ",").replace(";", "\\n")
+                allergy = details[9].replace("-", ",").replace(";", "\\n")
+                examination = details[10].replace("-", ",").replace(";", "\\n")
+                abrasions = details[11].replace("-", ",").replace(";", "\\n")
+                treatment_advice = details[12].replace("-", ",").replace(";", "\\n")
+                treatment = details[13].replace("-", ",").replace(";", "\\n")
+                treatment_charges = details[14].replace("-", ",").replace(";", "\\n")
                 newdata = {
                     "medical_history": medical_history,
                     "dental_carries": dental_carries,
@@ -383,7 +383,7 @@ def doctor_search_patient(request):
                 age = basic_details[6]
                 sex = basic_details[8]
                 phone = basic_details[1]
-                address = basic_details[5]
+                address = basic_details[5].replace("-", ",").replace(";", "\\n")
                 data = {
                     "uniqueid": uniqueid,
                     "name": name,
@@ -405,15 +405,15 @@ def doctor_search_patient(request):
                 next(reader)
                 details = next(reader)
 
-                medical_history = details[6]
-                dental_carries = details[7]
-                missing_teeth = details[8]
-                allergy = details[9]
-                examination = details[10]
-                abrasions = details[11]
-                treatment_advice = details[12]
-                treatment = details[13]
-                treatment_charges = details[14]
+                medical_history = details[6].replace("-", ",").replace(";", "\\n")
+                dental_carries = details[7].replace("-", ",").replace(";", "\\n")
+                missing_teeth = details[8].replace("-", ",").replace(";", "\\n")
+                allergy = details[9].replace("-", ",").replace(";", "\\n")
+                examination = details[10].replace("-", ",").replace(";", "\\n")
+                abrasions = details[11].replace("-", ",").replace(";", "\\n")
+                treatment_advice = details[12].replace("-", ",").replace(";", "\\n")
+                treatment = details[13].replace("-", ",").replace(";", "\\n")
+                treatment_charges = details[14].replace("-", ",").replace(";", "\\n")
                 newdata = {
                     "medical_history": medical_history,
                     "dental_carries": dental_carries,
