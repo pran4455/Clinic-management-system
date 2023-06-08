@@ -391,4 +391,6 @@ def add_patient_details(request):
 def testing(request):
     return render(request, "doctor_add_patient_details.html")
 
+def logout(request):
+    return render(request, "index.html")
 
