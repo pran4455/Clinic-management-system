@@ -317,7 +317,7 @@ def doctor_search_patient(request):
                 uniqueid = basic_details[-4]
                 name = basic_details[0]
                 age = basic_details[6]
-                sex = basic_details[8]
+                sex = basic_details[7]
                 phone = basic_details[1]
                 address = basic_details[5].replace("-", ",").replace(";", "\\n")
                 data = {
@@ -341,7 +341,6 @@ def doctor_search_patient(request):
                 next(reader)
                 details = next(reader)
 
-                medical_history = details[6].replace("-", ",").replace(";", "\\n")
                 dental_carries = details[7].replace("-", ",").replace(";", "\\n")
                 missing_teeth = details[8].replace("-", ",").replace(";", "\\n")
                 allergy = details[9].replace("-", ",").replace(";", "\\n")
@@ -351,7 +350,6 @@ def doctor_search_patient(request):
                 treatment = details[13].replace("-", ",").replace(";", "\\n")
                 treatment_charges = details[14].replace("-", ",").replace(";", "\\n")
                 newdata = {
-                    "medical_history": medical_history,
                     "dental_carries": dental_carries,
                     "missing_teeth": missing_teeth,
                     "allergy": allergy,
@@ -381,7 +379,7 @@ def doctor_search_patient(request):
                 uniqueid = basic_details[-4]
                 name = basic_details[0]
                 age = basic_details[6]
-                sex = basic_details[8]
+                sex = basic_details[7]
                 phone = basic_details[1]
                 address = basic_details[5].replace("-", ",").replace(";", "\\n")
                 data = {
@@ -405,7 +403,6 @@ def doctor_search_patient(request):
                 next(reader)
                 details = next(reader)
 
-                medical_history = details[6].replace("-", ",").replace(";", "\\n")
                 dental_carries = details[7].replace("-", ",").replace(";", "\\n")
                 missing_teeth = details[8].replace("-", ",").replace(";", "\\n")
                 allergy = details[9].replace("-", ",").replace(";", "\\n")
@@ -415,7 +412,6 @@ def doctor_search_patient(request):
                 treatment = details[13].replace("-", ",").replace(";", "\\n")
                 treatment_charges = details[14].replace("-", ",").replace(";", "\\n")
                 newdata = {
-                    "medical_history": medical_history,
                     "dental_carries": dental_carries,
                     "missing_teeth": missing_teeth,
                     "allergy": allergy,
@@ -442,21 +438,135 @@ def add_patient_details(request):
         sex = request.POST.get("sex")
         phone = request.POST.get("phone-number")
         address = request.POST.get("address")
-        medical_history = request.POST.get("medical-history").replace(",", "-").replace(",", "-").replace("\r\n", ";")
+        prescription = request.POST.get("prescription").replace(",", "-").replace(",", "-").replace("\r\n", ";")
         dental_carries = request.POST.get("dental-carries").replace(",", "-").replace("\r\n", ";")
         missing_teeth = request.POST.get("missing-teeth").replace(",", "-").replace("\r\n", ";")
         allergy = request.POST.get("allergy").replace(",", "-").replace("\r\n", ";")
         abrasions = request.POST.get("abrasions").replace(",", "-").replace("\r\n", ";")
         with open(f"./myapp/csv/{name}.csv", "a") as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([uniqueid, name, age, sex, phone, address, medical_history, dental_carries, missing_teeth, allergy, "None", abrasions, "None", "None", "None"])
+            writer.writerow([uniqueid, name, age, sex, phone, address, prescription, dental_carries, missing_teeth, allergy, "None", abrasions, "None", "None", "None"])
         return render(request, "doctor_search_patient.html", {"alertmessage": "Details saved successfully!"})
 
     return render(request, "doctor_add_patient_details.html")
 
+def doctor_prescription_search_patient(request):
+    if request.method == "POST":
+        patient_id = request.POST.get("patientid")
+        patient_name = request.POST.get("patientname")
+        current_name = ''
+        if patient_id:
+            with open("register.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[-1].strip() == patient_id.strip():
+                        current_name = row[0]
+                        break
+                else:
+                    return render(request, "doctor_prescription_search_patient.html", {"alertmessage": "Patient not found!"})
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                basic_details = next(reader)
+                uniqueid = basic_details[-4]
+                name = basic_details[0]
+                age = basic_details[6]
+                sex = basic_details[7]
+                phone = basic_details[1]
+                address = basic_details[5].replace("-", ",").replace(";", "\\n")
+                data = {
+                    "uniqueid": uniqueid,
+                    "name": name,
+                    "age": age,
+                    "sex": sex,
+                    "phone": phone,
+                    "address": address,
+                }
 
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                if len([row for row in reader]) < 2:
+                    data["alertmessage"] = "Patient details are not entered! Please enter them now!"
+                    return render(request, "doctor_add_patient_details.html", data)
+
+            return render(request, "enter_prescription.html", data)
+
+        elif patient_name:
+            with open("register.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[0].strip() == patient_name.strip():
+                        current_name = row[0]
+                        break
+                else:
+                    return render(request, "doctor_search_patient.html", {"alertmessage": "Patient not found!"})
+            current_name = patient_name
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                basic_details = next(reader)
+                uniqueid = basic_details[-4]
+                name = basic_details[0]
+                age = basic_details[6]
+                sex = basic_details[7]
+                phone = basic_details[1]
+                address = basic_details[5].replace("-", ",").replace(";", "\\n")
+                data = {
+                    "uniqueid": uniqueid,
+                    "name": name,
+                    "age": age,
+                    "sex": sex,
+                    "phone": phone,
+                    "address": address,
+                }
+
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                if len([row for row in reader]) < 2:
+                    data["alertmessage"] = "Patient details are not entered! Please enter them now!"
+                    return render(request, "doctor_add_patient_details.html", data)
+
+            return render(request, "enter_prescription.html", data)
+
+        else:
+            return render(request, "doctor_prescription_search_patient.html", {"alertmessage": "Please fill any one field!"})
+
+    return render(request, "doctor_prescription_search_patient.html")
+
+def add_prescription_details(request):
+    if request.method == "POST":
+        current_name = request.POST.get("name")
+        medical_prescription = request.POST.get("prescription").replace("-", ",").replace(";", "\\n"),
+        examination = request.POST.get("examination").replace("-", ",").replace(";", "\\n"),
+        treatment = request.POST.get("treatment").replace("-", ",").replace(";", "\\n"),
+        advice = request.POST.get("advice").replace("-", ",").replace(";", "\\n"),
+        with open(f"./myapp/csv/{current_name}.csv", "a") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([examination, medical_prescription, treatment, advice])
+
+        with open(f"./myapp/csv/{current_name}.csv", "r") as oldfile, open(f"./myapp/csv/{current_name}.tmp",
+                                                                           "w") as newfile:
+            reader = csv.reader(oldfile)
+            writer = csv.writer(newfile)
+
+            myrow = [row for row in reader]
+
+
+            myrow[1][6] = medical_prescription
+            myrow[1][10] = examination
+            myrow[1][12] = treatment
+            myrow[1][13] = advice
+
+            writer.writerows(myrow)
+
+        os.replace(f"./myapp/csv/{current_name}.tmp", f"./myapp/csv/{current_name}.csv")
+
+
+
+
+
+    else:
+        return render(request, "enter_prescription.html")
 def testing(request):
-    return render(request, "doctor_add_patient_details.html")
+    return render(request, "enter_prescription.html")
 
 def logout(request):
     return render(request, "index.html")

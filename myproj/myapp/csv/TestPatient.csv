@@ -1,2 +1,2 @@
 TestPatient,0123456789,2000-01-01,pat@pat.com,patpat,Test;Address,20,Other,A,pat,588023,None,None,None
-588023,TestPatient,20,A,0123456789,Test;Address,Test;Medical;History,Test;Dental;Carries,Test;Missing;Teeth,Test;Allergy,None,Test;Abrasions,None,None,None
+588023,TestPatient,20,A,0123456789,Test;Address,Test;Prescription,Test;Dental;Carries,Test;Missing;Teeth,Test;Allergy,None,Test;Abrasions,None,None,None
