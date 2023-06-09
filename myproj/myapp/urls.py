@@ -27,3 +27,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name="logout"),
     # path('validate-otp/', lambda request: redirect('/clinic/forgot-password/'), name="validate_otp")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+# check treatment, treatment advice, charges

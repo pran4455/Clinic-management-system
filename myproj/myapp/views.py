@@ -341,6 +341,7 @@ def doctor_search_patient(request):
                 next(reader)
                 details = next(reader)
 
+                prescription = details[6].replace("-",",").replace(";", "\\n")
                 dental_carries = details[7].replace("-", ",").replace(";", "\\n")
                 missing_teeth = details[8].replace("-", ",").replace(";", "\\n")
                 allergy = details[9].replace("-", ",").replace(";", "\\n")
@@ -350,6 +351,7 @@ def doctor_search_patient(request):
                 treatment = details[13].replace("-", ",").replace(";", "\\n")
                 treatment_charges = details[14].replace("-", ",").replace(";", "\\n")
                 newdata = {
+                    "prescription": prescription,
                     "dental_carries": dental_carries,
                     "missing_teeth": missing_teeth,
                     "allergy": allergy,
@@ -403,6 +405,7 @@ def doctor_search_patient(request):
                 next(reader)
                 details = next(reader)
 
+                prescription = details[6].replace("-",",").replace(";", "\\n")
                 dental_carries = details[7].replace("-", ",").replace(";", "\\n")
                 missing_teeth = details[8].replace("-", ",").replace(";", "\\n")
                 allergy = details[9].replace("-", ",").replace(";", "\\n")
@@ -412,6 +415,7 @@ def doctor_search_patient(request):
                 treatment = details[13].replace("-", ",").replace(";", "\\n")
                 treatment_charges = details[14].replace("-", ",").replace(";", "\\n")
                 newdata = {
+                    "prescription": prescription,
                     "dental_carries": dental_carries,
                     "missing_teeth": missing_teeth,
                     "allergy": allergy,
@@ -438,14 +442,14 @@ def add_patient_details(request):
         sex = request.POST.get("sex")
         phone = request.POST.get("phone-number")
         address = request.POST.get("address")
-        prescription = request.POST.get("prescription").replace(",", "-").replace(",", "-").replace("\r\n", ";")
+        # prescription = request.POST.get("prescription").replace(",", "-").replace(",", "-").replace("\r\n", ";")
         dental_carries = request.POST.get("dental-carries").replace(",", "-").replace("\r\n", ";")
         missing_teeth = request.POST.get("missing-teeth").replace(",", "-").replace("\r\n", ";")
         allergy = request.POST.get("allergy").replace(",", "-").replace("\r\n", ";")
         abrasions = request.POST.get("abrasions").replace(",", "-").replace("\r\n", ";")
         with open(f"./myapp/csv/{name}.csv", "a", newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([uniqueid, name, age, sex, phone, address, prescription, dental_carries, missing_teeth, allergy, "None", abrasions, "None", "None", "None"])
+            writer.writerow([uniqueid, name, age, sex, phone, address, "None", dental_carries, missing_teeth, allergy, "None", abrasions, "None", "None", "None"])
         return render(request, "doctor_search_patient.html", {"alertmessage": "Details saved successfully!"})
 
     return render(request, "doctor_add_patient_details.html")
@@ -534,11 +538,10 @@ def doctor_prescription_search_patient(request):
 def add_prescription_details(request):
     if request.method == "POST":
         current_name = request.POST.get("name")
-        medical_prescription = request.POST.get("prescription").replace("-", ",").replace(";", "\\n")
-        examination = request.POST.get("examination").replace("-", ",").replace(";", "\\n")
-        treatment = request.POST.get("treatment").replace("-", ",").replace(";", "\\n")
-        advice = request.POST.get("advice").replace("-", ",").replace(";", "\\n")
-        print(medical_prescription, examination, treatment, advice)
+        medical_prescription = request.POST.get("prescription").replace(",", "-").replace("\r\n", ";")
+        examination = request.POST.get("examination").replace(",", "-").replace("\r\n", ";")
+        treatment = request.POST.get("treatment").replace(",", "-").replace("\r\n", ";")
+        advice = request.POST.get("advice").replace(",", "-").replace("\r\n", ";")
         with open(f"./myapp/csv/{current_name}.csv", "a", newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow([examination, medical_prescription, treatment, advice])
@@ -556,7 +559,6 @@ def add_prescription_details(request):
             myrow[1][12] = treatment
             myrow[1][13] = advice
 
-            print(myrow)
 
             for row in myrow:
                 writer.writerow(row)
