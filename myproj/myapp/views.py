@@ -567,9 +567,30 @@ def add_prescription_details(request):
         return render(request, "doctor_prescription_search_patient.html", {"alertmessage": "Prescription added successfully!"})
     return render(request, "enter_prescription.html")
 
-def testing(request):
-    return render(request, "enter_prescription.html")
+def display_registered_patients(request):
+    class Patient:
+        def __init__(self, row):
+            self.uniqueid =  row[10]
+            self.name =  row[0]
+            self.phonenumber =  row[1]
+            self.dob =  row[2]
+            self.email =  row[3]
+            self.address =  row[5].replace("-", ",").replace(";", "\\n")
+            self.age =  row[6]
+            self.gender =  row[7]
+            self.blood =  row[8]
+            self.privilege =  "Patient" if row[9] == "pat" else ""
 
+    with open("patients.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        patient_data = []
+        for i in reader:
+            patient_data.append(Patient(i))
+        data = {"patients": patient_data}
+    return render(request, "display_registered_patients.html", data)
+
+def testing(request):
+    return render(request, "display_registered_patients.html")
 def logout(request):
     return render(request, "index.html")
 
