@@ -589,8 +589,19 @@ def display_registered_patients(request):
         data = {"patients": patient_data}
     return render(request, "display_registered_patients.html", data)
 
+
+def receptionist_view_appointments(request):
+    return render(request, "index.html")
+
+def receptionist_appointment_homepage(request):
+    return render(request, "receptionist_appointment_homepage.html")
+
 def testing(request):
-    return render(request, "display_registered_patients.html")
+    return render(request, "receptionist_book_appointment.html")
+
+def receptionist_book_appointment(request):
+    return render(request, "receptionist_book_appointment.html")
+
 def logout(request):
     return render(request, "index.html")
 
