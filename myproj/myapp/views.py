@@ -597,7 +597,10 @@ def receptionist_appointment_homepage(request):
     return render(request, "receptionist_appointment_homepage.html")
 
 def testing(request):
-    return render(request, "receptionist_book_appointment.html")
+    return render(request, "edit_timeslots.html")
+
+def receptionist_time_slot(request):
+    return render(request, "edit_timeslots.html")
 
 def receptionist_book_appointment(request):
     return render(request, "receptionist_book_appointment.html")
