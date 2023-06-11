@@ -27,7 +27,8 @@ urlpatterns = [
     path('admin/view-registered-patients/', views.display_registered_patients, name="display_registered_patients"),
     path('receptionist/appointment-homepage/', views.receptionist_appointment_homepage, name="receptionist_appointment_homepage"),
     path('receptionist/view-appointments/', views.receptionist_view_appointments, name="receptionist_view_appointments"),
-    path('receptionist/book-appointments/', views.receptionist_book_appointment, name="receptionist_book_appointment"),
+    path('receptionist/book-appointment/', views.receptionist_book_appointment, name="receptionist_book_appointment"),
+    path('patient/book-appointment/', views.patient_book_appointment, name="patient_book_appointment"),
     path('logout/', LogoutView.as_view(next_page='/'), name="logout"),
     # path('validate-otp/', lambda request: redirect('/clinic/forgot-password/'), name="validate_otp")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

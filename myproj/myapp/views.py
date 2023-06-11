@@ -602,6 +602,9 @@ def testing(request):
 def receptionist_book_appointment(request):
     return render(request, "receptionist_book_appointment.html")
 
+def patient_book_appointment(request):
+    return render(request, "patient_book_appointment.html")
+
 def logout(request):
     return render(request, "index.html")
 
