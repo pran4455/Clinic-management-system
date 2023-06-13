@@ -61,8 +61,7 @@ def login(request):
                             return render(request, "patient_homepage.html")
                         elif row[-2] == "doc":
                             CURRENT_PRIV = "doc"
-                            return render(request,
-                                          "doctor_homepage.html")  # Redirect to success page after successful login
+                            return render(request, "doctor_homepage.html")  # Redirect to success page after successful login
                     else:
                         return render(request, 'index.html',
                                       {'alertmessage': 'Wrong password'})  # Display wrong password message
