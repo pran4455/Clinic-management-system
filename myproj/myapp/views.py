@@ -606,8 +606,36 @@ def receptionist_book_appointment(request):
     return render(request, "receptionist_book_appointment.html")
 
 def patient_book_appointment(request):
-    return render(request, "patient_book_appointment.html")
+    class Doctor:
+        def __init__(self, name):
+            self.name = name
+    doctors = []
+    with open("doctors.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            doctors.append(Doctor(row[0]))
+    data = {"doctors": doctors}
 
+    with open("patients.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        print(CURRENT_USER)
+        for row in reader:
+            if row[3] == CURRENT_USER:
+                temp = {
+                    "name" : row[0],
+                    "uniqueid" : row[-1],
+                    "age" : row[6],
+                    "sex": row[7],
+                    "address": row[5].replace("-", ",").replace(";", "\\n"),
+                }
+                data.update(temp)
+                break
+
+
+    return render(request, "patient_book_appointment.html", data)
+
+def view_timeslots(request):
+    return render(request, "select_timeslot.html")
 def logout(request):
     return render(request, "index.html")
 

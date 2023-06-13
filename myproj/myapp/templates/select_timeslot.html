@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Book Appointment</title>
+  <meta charset="UTF-8">
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/select_timeslot.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Book Appointment</h2>
+    <div class="time-slots">
+      <input type="radio" id="slot1" name="time-slot" onclick="changeBorder()">
+      <label for="slot1" id="lblslot1">09:00 AM to 09:30 AM</label>
+      <input type="radio" id="slot2" name="time-slot" onclick="changeBorder()">
+      <label for="slot2" id="lblslot2">09:30 AM to 10:00 AM</label>
+      <input type="radio" id="slot3" name="time-slot" onclick="changeBorder()">
+      <label for="slot3" id="lblslot3">10:00 AM to 10:30 AM</label>
+      <input type="radio" id="slot4" name="time-slot" onclick="changeBorder()">
+      <label for="slot4" id="lblslot4">10:30 AM to 11:00 AM</label>
+      <input type="radio" id="slot5" name="time-slot" onclick="changeBorder()">
+      <label for="slot5" id="lblslot5">11:00 AM to 11:30 AM</label>
+      <input type="radio" id="slot6" name="time-slot" onclick="changeBorder()">
+      <label for="slot6" id="lblslot6">1:30 PM to 2:00 PM</label>
+      <input type="radio" id="slot7" name="time-slot" onclick="changeBorder()">
+      <label for="slot7" id="lblslot7">2:00 PM to 2:30 PM</label>
+      <input type="radio" id="slot8" name="time-slot" onclick="changeBorder()">
+      <label for="slot8" id="lblslot8">2:30 PM to 3:00 PM</label>
+      <input type="radio" id="slot9" name="time-slot" onclick="changeBorder()">
+      <label for="slot9" id="lblslot9">3:00 PM to 3:30 PM</label>
+      <input type="radio" id="slot10" name="time-slot" onclick="changeBorder()">
+      <label for="slot10" id="lblslot10">3:30 PM to 4:00 PM</label>
+      <input type="radio" id="slot11" name="time-slot" onclick="changeBorder()">
+      <label for="slot11" id="lblslot11">4:00 PM to 4:30 PM</label>
+      <input type="radio" id="slot12" name="time-slot" onclick="changeBorder()">
+      <label for="slot12" id="lblslot12">4:30 PM to 5:00 PM</label>
+    </div>
+    <button class="book-appointment-btn">Book Appointment</button>
+  </div>
+  <script>
+    function changeBorder(){
+        for (let i = 1; i <= 12; i++){
+            var chk = document.getElementById("slot".concat(i.toString()));
+            var lbl = document.getElementById("lblslot".concat(i.toString()));
+            if (chk.checked){
+                console.log("changing to blue");
+                lbl.style.border = "1px solid blue"
+            }
+            else{
+                console.log("changing to default");
+                lbl.style.border = "1px solid #ccc";
+            }
+        }
+    }
+  </script>
+</body>
+</html>
