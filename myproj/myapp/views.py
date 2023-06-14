@@ -20,6 +20,37 @@ RESET_EMAIL = ''
 CURRENT_USER = ''
 CURRENT_PRIV = ''
 
+slot_dict = {
+            "slot1": "09:00-09:30",
+            "slot2": "09:30-10:00",
+            "slot3": "10:00-10:30",
+            "slot4": "10:30-11:00",
+            "slot5": "11:00-11:30",
+            "slot6": "13:30-14:00",
+            "slot7": "14:00-14:30",
+            "slot8": "14:30-15:00",
+            "slot9": "15:00-15:30",
+            "slot10": "15:30-16:00",
+            "slot11": "16:00-16:30",
+            "slot12": "16:30-17:00",
+}
+
+lbl_slot_dict = {
+            "09:00-09:30" : "lblslot1",
+            "09:30-10:00" : "lblslot2",
+            "10:00-10:30" : "lblslot3",
+            "10:30-11:00" : "lblslot4",
+            "11:00-11:30" : "lblslot5",
+            "13:30-14:00" : "lblslot6",
+            "14:00-14:30" : "lblslot7",
+            "14:30-15:00" : "lblslot8",
+            "15:00-15:30" : "lblslot9",
+            "15:30-16:00" : "lblslot10",
+            "16:00-16:30" : "lblslot11",
+            "16:30-17:00" : "lblslot12",
+}
+
+
 
 def home(request):
     return render(request, 'index.html')
@@ -630,20 +661,7 @@ def receptionist_time_slot(request):
             date += d +"-"
         date = date[:-1]
         oldtimeslot = request.POST.getlist('slots')
-        slot_dict = {
-            "slot1": "09:00-09:30",
-            "slot2": "09:30-10:00",
-            "slot3": "10:00-10:30",
-            "slot4": "10:30-11:00",
-            "slot5": "11:00-11:30",
-            "slot6": "13:30-14:00",
-            "slot7": "14:00-14:30",
-            "slot8": "14:30-15:00",
-            "slot9": "15:00-15:30",
-            "slot10": "15:30-16:00",
-            "slot11": "16:00-16:30",
-            "slot12": "16:30-17:00",
-        }
+
         timeslot = []
         for t in oldtimeslot:
             timeslot.append(slot_dict.get(t))
@@ -668,9 +686,17 @@ def receptionist_time_slot(request):
 def receptionist_book_appointment(request):
     return render(request, "receptionist_book_appointment.html")
 
+def patient_appointment_homepage(request):
+    return render(request, "patient_appointments.html")
+
 def patient_book_appointment(request):
     if request.method == "POST":
-        date = request.POST.get("date")
+        olddate = request.POST.get("date").split("-")
+        olddate.reverse()
+        date = ""
+        for d in olddate:
+            date += d + "-"
+        date = date[:-1]
         doctor = request.POST.get("doctor")
         pid = request.POST.get("uniqueid")
         with open("doctors.csv") as csvfile:
@@ -698,7 +724,6 @@ def patient_book_appointment(request):
 
     with open("patients.csv") as csvfile:
         reader = csv.reader(csvfile)
-        # print(CURRENT_USER)
         for row in reader:
             if row[3] == CURRENT_USER:
                 temp = {
@@ -714,14 +739,57 @@ def patient_book_appointment(request):
 
     return render(request, "patient_book_appointment.html", data)
 
-def view_timeslots(request, data):
+def view_timeslots(request, data=None):
     if not os.path.exists("Confirmedappointments.csv"):
         with open("Confirmedappointments.csv",mode='w', newline='') as file:
             pass
         file.close()
     if not os.path.exists("appointments.json"):
         apb.writejson()
-    return render(request, "select_timeslot.html")
+    if data is None:
+        timeslot = request.POST.get("rdvalue")
+        doctorid = request.POST.get("docid")
+        patientid = request.POST.get("patid")
+        date = request.POST.get("dt")
+        apb.bookappointment(patientid, doctorid, date, timeslot)
+
+        return render(request, "patient_homepage.html", {"alertmessage": "Appointment booking successfull!"})
+    if request.method == "POST":
+        class WhatColor:
+            def __init__(self, boolean, timeslot):
+                self.color = None
+                if boolean:
+                    self.color = "#37d766"
+                else:
+                    self.color = "#ff6661"
+                self.lblname = lbl_slot_dict.get(timeslot)
+                self.rdname = lbl_slot_dict.get(timeslot).replace("lbl", "")
+
+        doctorid = data.get("d_uniqueid")
+        patientid = data.get("p_uniqueid")
+        date = data.get("date")
+        timeslots = ["09:00-09:30",
+            "09:30-10:00",
+            "10:00-10:30",
+            "10:30-11:00",
+            "11:00-11:30",
+            "13:30-14:00",
+            "14:00-14:30",
+            "14:30-15:00",
+            "15:00-15:30",
+            "15:30-16:00",
+            "16:00-16:30",
+            "16:30-17:00",]
+        colors = []
+
+        for time in timeslots:
+            isAvailable = apb.checkavailability(doctorid, date, time)
+            colors.append(WhatColor(isAvailable, time))
+
+        data = {"colors": colors, "docid": doctorid, "patid": patientid, "dt": date}
+
+        return render(request, "select_timeslot.html", data)
+    else:
+        return render(request, "index.html")
 def logout(request):
     return render(request, "index.html")
-
