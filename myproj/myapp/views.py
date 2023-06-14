@@ -1,16 +1,18 @@
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponse
 import csv
 import sys
 import datetime
-import smtplib
 import os
-from email.message import EmailMessage
 import random
+
 
 sys.path.append("D:/djangoProject/Clinic-management-system/myproj/myapp/")
 
 import appointment_booking as apb
+import send_email
 
 # import time
 # from django.contrib import messages
@@ -171,14 +173,10 @@ def get_email(request):
                         break
                 global RANDOM_OTP, RESET_EMAIL
                 RESET_EMAIL = email
-                user = os.getenv('EMAIL_USER')
-                key = 'rrsfsilblgzbiaep'  # use os.getenv
                 RANDOM_OTP = random.randint(100000, 999999)
-                msg = EmailMessage()
-                msg["Subject"] = "OTP Verification for Resetting your Password"
-                msg["From"] = user
-                msg["To"] = email
-                msg.set_content(
+                subject =  "OTP Verification for Resetting your Password"
+                to = email
+                content = (
                     """Hello """
                     + str(name)
                     + """,
@@ -190,10 +188,9 @@ def get_email(request):
 
                                     Note that this OTP is valid only for this instance. Requesting another OTP will make this OTP invalid. Incase you haven't requested to reset your password, contact your xyz. Thank You"""
                 )
-                server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-                server.login(user, key)
-                server.send_message(msg)
-                server.quit()
+
+                send_email.send_email(to, subject, content)
+
                 return render(request, 'validate_otp.html')
     return render(request, 'forgot_password.html')
 
@@ -751,7 +748,36 @@ def view_timeslots(request, data=None):
         doctorid = request.POST.get("docid")
         patientid = request.POST.get("patid")
         date = request.POST.get("dt")
+        doctorname = ""
         apb.bookappointment(patientid, doctorid, date, timeslot)
+        with open("doctors.csv") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if row[-1] == doctorid:
+                    doctorname = row[0]
+                    break
+
+        name = ""
+        with open("patients.csv") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if row[3] == CURRENT_USER:
+                    name = row[0]
+                    break
+        subject = "Appointment confirmation"
+
+        content = f"Hello {name},\n" \
+                  f"\t This email is a confirmation that we have received your appointment request." \
+                  f"Your appointment details:\n" \
+                  f"\t\tPatient Name: {name}\n" \
+                  f"\t\tPatient ID: {patientid}\n" \
+                  f"\t\tDoctor Name: {doctorname}\n" \
+                  f"\t\tDate: {date}\n" \
+                  f"\t\tTime Slot: {timeslot}\n" \
+                  f"Thank you."
+
+
+        send_email.send_email(CURRENT_USER, subject, content)
 
         return render(request, "patient_homepage.html", {"alertmessage": "Appointment booking successfull!"})
     if request.method == "POST":
@@ -783,13 +809,15 @@ def view_timeslots(request, data=None):
         colors = []
 
         for time in timeslots:
-            isAvailable = apb.checkavailability(doctorid, date, time)
+            try:
+                isAvailable = apb.checkavailability(doctorid, date, time)
+            except AttributeError:
+                return render(request, "patient_homepage.html", {"alertmessage": "The selected date is not ready for booking! Please try with another date!"})
             colors.append(WhatColor(isAvailable, time))
 
         data = {"colors": colors, "docid": doctorid, "patid": patientid, "dt": date}
 
         return render(request, "select_timeslot.html", data)
-    else:
-        return render(request, "index.html")
+
 def logout(request):
     return render(request, "index.html")
