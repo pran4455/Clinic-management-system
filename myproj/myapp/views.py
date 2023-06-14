@@ -1,11 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import csv
+import sys
 import datetime
 import smtplib
 import os
 from email.message import EmailMessage
 import random
+
+sys.path.append("D:/djangoProject/Clinic-management-system/myproj/myapp/")
+
+import appointment_booking as apb
 
 # import time
 # from django.contrib import messages
@@ -600,12 +605,87 @@ def testing(request):
     return render(request, "edit_timeslots.html")
 
 def receptionist_time_slot(request):
-    return render(request, "edit_timeslots.html")
+    if request.method == "POST":
+        if not os.path.exists("Confirmedappointments.csv"):
+            with open("Confirmedappointments.csv", mode='w', newline='') as file:
+                pass
+            file.close()
+        if not os.path.exists("appointments.json"):
+            apb.writejson()
+
+
+        doctor = request.POST.get("doctor")
+        doctorid = None
+        with open("doctors.csv") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if row[0] == doctor:
+                    doctorid = row[-1]
+                    break
+
+        olddate = request.POST.get("date").split("-")
+        olddate.reverse()
+        date = ""
+        for d in olddate:
+            date += d +"-"
+        date = date[:-1]
+        oldtimeslot = request.POST.getlist('slots')
+        slot_dict = {
+            "slot1": "09:00-09:30",
+            "slot2": "09:30-10:00",
+            "slot3": "10:00-10:30",
+            "slot4": "10:30-11:00",
+            "slot5": "11:00-11:30",
+            "slot6": "13:30-14:00",
+            "slot7": "14:00-14:30",
+            "slot8": "14:30-15:00",
+            "slot9": "15:00-15:30",
+            "slot10": "15:30-16:00",
+            "slot11": "16:00-16:30",
+            "slot12": "16:30-17:00",
+        }
+        timeslot = []
+        for t in oldtimeslot:
+            timeslot.append(slot_dict.get(t))
+
+        for time in timeslot:
+
+            apb.timeslotgenerator(doctorid, date, timeslot)
+
+        return render(request, "homepage.html", {"alertmessage": "Time slot edited successfully!"})
+    else:
+        class Doctor:
+            def __init__(self, name):
+                self.name = name
+        doctors = []
+        with open("doctors.csv") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                doctors.append(Doctor(row[0]))
+        data = {"doctors": doctors}
+        return render(request, "edit_timeslots.html", data)
 
 def receptionist_book_appointment(request):
     return render(request, "receptionist_book_appointment.html")
 
 def patient_book_appointment(request):
+    if request.method == "POST":
+        date = request.POST.get("date")
+        doctor = request.POST.get("doctor")
+        pid = request.POST.get("uniqueid")
+        with open("doctors.csv") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if row[0] == doctor:
+                    d_uniqueid = row[-1]
+                    data = {
+                        "d_uniqueid" : d_uniqueid,
+                        "p_uniqueid": pid,
+                        "date": date
+                    }
+                    break
+        return view_timeslots(request, data)
+        # return render(request, "select_timeslot.html", data)
     class Doctor:
         def __init__(self, name):
             self.name = name
@@ -618,7 +698,7 @@ def patient_book_appointment(request):
 
     with open("patients.csv") as csvfile:
         reader = csv.reader(csvfile)
-        print(CURRENT_USER)
+        # print(CURRENT_USER)
         for row in reader:
             if row[3] == CURRENT_USER:
                 temp = {
@@ -634,7 +714,13 @@ def patient_book_appointment(request):
 
     return render(request, "patient_book_appointment.html", data)
 
-def view_timeslots(request):
+def view_timeslots(request, data):
+    if not os.path.exists("Confirmedappointments.csv"):
+        with open("Confirmedappointments.csv",mode='w', newline='') as file:
+            pass
+        file.close()
+    if not os.path.exists("appointments.json"):
+        apb.writejson()
     return render(request, "select_timeslot.html")
 def logout(request):
     return render(request, "index.html")
