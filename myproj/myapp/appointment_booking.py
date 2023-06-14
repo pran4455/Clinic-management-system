@@ -15,6 +15,7 @@ from bst import BST,serialize_bst,deserialize_bst
 import json
 import os
 import csv
+from datetime import datetime
 
 def writejson(dictionary={}):
     '''
@@ -99,7 +100,7 @@ def bookappointment(patientid,docterid,date,time):
 
         with open("Confirmedappointments.csv",mode='a', newline='') as file:
             f=csv.writer(file)
-            f.writerow([patientid,docterid,date,time])
+            f.writerow([patientid,docterid,date,time, datetime.now().strftime("%d/%m/%Y %H:%M:%S")])
 
 if __name__=='__main__':
     if not os.path.exists("Confirmedappointments.csv"):

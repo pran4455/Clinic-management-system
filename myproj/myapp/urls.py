@@ -29,6 +29,7 @@ urlpatterns = [
     path('receptionist/view-appointments/', views.receptionist_view_appointments, name="receptionist_view_appointments"),
     path('receptionist/book-appointment/', views.receptionist_book_appointment, name="receptionist_book_appointment"),
     path('patient/book-appointment/', views.patient_book_appointment, name="patient_book_appointment"),
+    path('patient/appointment-history/', views.patient_appointment_history, name="patient_appointment_history"),
     path('patient/appointment-homepage/', views.patient_appointment_homepage, name="patient_appointment_homepage"),
     path('patient/view-timeslots/', views.view_timeslots, name="view_timeslots"),
     path('receptionist/time-slot/', views.receptionist_time_slot, name="receptionist_time_slot"),

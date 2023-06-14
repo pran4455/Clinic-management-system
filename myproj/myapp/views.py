@@ -622,7 +622,6 @@ def display_registered_patients(request):
         data = {"patients": patient_data}
     return render(request, "display_registered_patients.html", data)
 
-
 def receptionist_view_appointments(request):
     return render(request, "index.html")
 
@@ -818,6 +817,43 @@ def view_timeslots(request, data=None):
         data = {"colors": colors, "docid": doctorid, "patid": patientid, "dt": date}
 
         return render(request, "select_timeslot.html", data)
+
+def patient_appointment_history(request):
+    class PatientAppointmentData:
+        def __init__(self, patient_id, doctor_id, date, timeslot, booking_datetime):
+            self.patientid = patient_id
+            self.doctorid = doctor_id
+            self.date = date
+            self.timeslot = timeslot
+            self.bookingdatetime = booking_datetime
+
+    patient_id = ""
+    patient_name = ""
+    with open("patients.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[3] == CURRENT_USER:
+                patient_id = row[-1]
+                patient_name = row[0]
+
+
+
+    appointmentdata = []
+    with open('Confirmedappointments.csv') as csvfile:
+        reader =csv.reader(csvfile)
+        for row in reader:
+            if row[0] == patient_id:
+                doctorname = ""
+                with open("doctors.csv") as anothercsvfile:
+                    anothereader = csv.reader(anothercsvfile)
+                    for anotherow in anothereader:
+                        if anotherow[-1] == row[1]:
+                            doctorname = anotherow[0]
+                appointmentdata.append(PatientAppointmentData(patient_name, doctorname, row[2], row[3], row[4]))
+
+    data = {"appointmentdata": appointmentdata}
+
+    return render(request, "patient_appointment_history.html", data)
 
 def logout(request):
     return render(request, "index.html")
