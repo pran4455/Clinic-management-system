@@ -36,6 +36,7 @@ urlpatterns = [
     path('patient/appointment-history/', views.patient_appointment_history, name="patient_appointment_history"),
     path('patient/appointment-homepage/', views.patient_appointment_homepage, name="patient_appointment_homepage"),
     path('patient/view-timeslots/', views.view_timeslots, name="view_timeslots"),
+    path('patient/view-history/', views.patient_view_history, name="patient_view_history"),
     path('receptionist/time-slot/', views.receptionist_time_slot, name="receptionist_time_slot"),
     path('logout/', LogoutView.as_view(next_page='/'), name="logout"),
     # path('validate-otp/', lambda request: redirect('/clinic/forgot-password/'), name="validate_otp")

@@ -368,12 +368,41 @@ def receptionist_search_patient(request):
         patient_id = request.POST.get("patientid")
         patient_name = request.POST.get("patientname")
         current_name = ""
+        last_appointment = None
+        upcoming_appointment = None
+        doctor_name = None
         if patient_id:
             with open("register.csv") as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
                     if row[-1].strip() == patient_id.strip():
                         current_name = row[0]
+            
+            temp1 = {}
+            temp2 = {}
+            with open("Confirmedappointments.csv") as csvfile:
+                reader  = csv.reader(csvfile)
+                for row in reader:
+                    if row[0] == patient_id:
+                        doctor_id = row[1]
+                        with open("doctors.csv") as csvfile:
+                            reader = csv.reader(csvfile)
+                            for anotherrow in reader:
+                                if anotherrow[-1] == doctor_id:
+                                    doctor_name = anotherrow[0]
+                        
+                        today = datetime.datetime.today()
+                        appointment = row[2]
+                        date, month, year = appointment.split("-")
+                        appointment_date = datetime.datetime(int(year), int(month), int(date))
+                        if appointment_date > today:
+                            temp2[appointment_date - today] = appointment
+                        else:
+                            temp1[today - appointment_date] = appointment
+            last_appointment = temp1.get(min(temp1.keys(), default="EMPTY"))
+            upcoming_appointment = temp2.get(min(temp2.keys(), default="EMPTY"))
+
+
             with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
@@ -382,17 +411,55 @@ def receptionist_search_patient(request):
                         "name": row[0],
                         "phone": row[1],
                         "gender": row[7],
-                        "last_appointment": row[-3],
+                        "last_appointment": str(last_appointment),
                         "address": row[5].replace("-", ",").replace(";", "\\n"),
-                        "upcoming_appointment": row[-2],
-                        "doctor_name": row[-1],
+                        "upcoming_appointment": str(upcoming_appointment),
+                        "doctor_name": str(doctor_name),
                         "blood_group": row[8],
                     }
                     break
 
             return render(request, "receptionist_view_patient_details.html", data)
         elif patient_name:
+            patient_id = ""
+            with open("patients.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[0] == patient_name:
+                        patient_id = row[-1]
+
             current_name = patient_name
+
+            with open("register.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[-1].strip() == patient_id.strip():
+                        current_name = row[0]
+
+            temp1 = {}
+            temp2 = {}
+            with open("Confirmedappointments.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[0] == patient_id:
+                        doctor_id = row[1]
+                        with open("doctors.csv") as csvfile:
+                            reader = csv.reader(csvfile)
+                            for anotherrow in reader:
+                                if anotherrow[-1] == doctor_id:
+                                    doctor_name = anotherrow[0]
+
+                        today = datetime.datetime.today()
+                        appointment = row[2]
+                        date, month, year = appointment.split("-")
+                        appointment_date = datetime.datetime(int(year), int(month), int(date))
+                        if appointment_date > today:
+                            temp2[appointment_date - today] = appointment
+                        else:
+                            temp1[today - appointment_date] = appointment
+            last_appointment = temp1.get(min(temp1.keys(), default="EMPTY"))
+            upcoming_appointment = temp2.get(min(temp2.keys(), default="EMPTY"))
+
             with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
@@ -401,10 +468,10 @@ def receptionist_search_patient(request):
                         "name": row[0],
                         "phone": row[1],
                         "gender": row[7],
-                        "last_appointment": row[-3],
+                        "last_appointment": str(last_appointment),
                         "address": row[5].replace("-", ",").replace(";", "\\n"),
-                        "upcoming_appointment": row[-2],
-                        "doctor_name": row[-1],
+                        "upcoming_appointment": str(upcoming_appointment),
+                        "doctor_name": str(doctor_name),
                         "blood_group": row[8],
                     }
                     break
@@ -1215,7 +1282,6 @@ def book_local_appointment(request):
 
         eval(command)
 
-        # print(eval(f"{queuename}.dequeue().name"))
 
         return render(request, "homepage.html", {"alertmessage": f"Appointment booked for doctor {matched_doctor}"})
             
@@ -1240,3 +1306,173 @@ def receptionist_view_local_appointments(request):
     data = {"appointmentdata": results}
     
     return render(request, "local_appointments.html", data)
+
+def patient_view_history(request):
+    global CURRENT_USER
+
+    patientid = ""
+    patientname = ""
+    phonenumber = ""
+    gender = ""
+    bloodgroup = ""
+    address = ""
+    dob = ""
+    age = ""
+    username = ""
+    lastappointment = ""
+    upcomingappointment = ""
+    dentalcarries = ""
+    missingtooth = ""
+    allergy = ""
+    abrasions = ""
+    medicaldatas = ""
+    appointmentdatas = ""
+    lastappointment = None
+    upcomingappointment = None
+    
+
+    class MedicalData:
+        def __init__(self, examination, prescription, treatment, treatmentadvice):
+            self.examination = examination
+            self.prescription = prescription
+            self.treatment = treatment
+            self.treatmentadvice = treatmentadvice
+    
+    class AppointmentData:
+        def __init__(self, patientname, doctorname, date, timeslot):
+            self.patientname = patientname
+            self.doctorname = doctorname
+            self.date = date
+            self.timeslot = timeslot
+
+    patientid = ""
+    patientname = ""
+    username = CURRENT_USER
+
+    with open("patients.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[3] == CURRENT_USER:
+                patientid = row[-1]
+                patientname = row[0]
+
+    
+    with open(f"./myapp/csv/{patientname}.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        firstrow = next(reader)
+
+        phonenumber = firstrow[1]
+        dob = firstrow[2]
+        address = firstrow[5].replace("-", ",").replace(";", "\\n")
+        age = firstrow[6]
+        gender = firstrow[7]
+        bloodgroup = firstrow[8]
+
+        try:
+            secondrow = next(reader)
+        except StopIteration:
+            data = {
+            "uniqueid": patientid,
+            "patientname": patientname,
+            "phonenumber": phonenumber,
+            "gender": gender,
+            "bloodgroup": bloodgroup,
+            "address": address,
+            "dob": dob,
+            "age": age,
+            "username": username,
+            "lastappointment": lastappointment,
+            "upcomingappointment": upcomingappointment,
+            "dentalcarries": dentalcarries,
+            "missingteeth": missingtooth,
+            "allergy": allergy,
+            "abrasions": abrasions,
+            "medicaldatas": medicaldatas,
+            "appointmentdatas": appointmentdatas,
+            }
+        
+
+            CURRENT_USER = username
+
+            return render(request, "view_patient_history.html", data)
+
+        dentalcarries = secondrow[7].replace("-", ",").replace(";", "\\n")
+        missingtooth = secondrow[8].replace("-", ",").replace(";", "\\n")
+        allergy = secondrow[9].replace("-", ",").replace(";", "\\n")
+        abrasions = secondrow[11].replace("-", ",").replace(";", "\\n")
+
+        medicaldatas = []
+        appointmentdatas = []
+
+        for row in reader:
+            medicaldata = MedicalData(row[0], row[1], row[2], row[3])
+            medicaldatas.append(medicaldata)
+    
+    with open("Confirmedappointments.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[0] == patientid:
+                doctorname = ""
+                with open("doctors.csv") as anothercsvfile:
+                    anotherreader = csv.reader(anothercsvfile)
+                    for anotherrow in anotherreader:
+                        if anotherrow[-1] == row[1]:
+                            doctorname = anotherrow[0]
+                appointmentdata = AppointmentData(patientname, doctorname, row[2], row[3])
+                appointmentdatas.append(appointmentdata)
+
+
+        temp1 = {}
+        temp2 = {}
+        with open("Confirmedappointments.csv") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if row[0] == patientid:
+                    doctor_id = row[1]
+                    with open("doctors.csv") as csvfile:
+                        reader = csv.reader(csvfile)
+                        for anotherrow in reader:
+                            if anotherrow[-1] == doctor_id:
+                                doctorname = anotherrow[0]
+
+                    today = datetime.datetime.today()
+                    appointment = row[2]
+                    date, month, year = appointment.split("-")
+                    appointment_date = datetime.datetime(int(year), int(month), int(date))
+                    if appointment_date > today:
+                        temp2[appointment_date - today] = appointment
+                    else:
+                        temp1[today - appointment_date] = appointment
+
+        lastappointment = temp1.get(min(temp1.keys(), default="EMPTY"))
+        upcomingappointment = temp2.get(min(temp2.keys(), default="EMPTY"))
+
+    
+    data = {
+        "uniqueid": patientid,
+        "patientname": patientname,
+        "phonenumber": phonenumber,
+        "gender": gender,
+        "bloodgroup": bloodgroup,
+        "address": address,
+        "dob": dob,
+        "age": age,
+        "username": username,
+        "lastappointment": lastappointment,
+        "upcomingappointment": upcomingappointment,
+        "dentalcarries": dentalcarries,
+        "missingteeth": missingtooth,
+        "allergy": allergy,
+        "abrasions": abrasions,
+        "medicaldatas": medicaldatas,
+        "appointmentdatas": appointmentdatas,
+    }
+    
+
+    CURRENT_USER = username
+
+    return render(request, "view_patient_history.html", data)
+
+
+
+        
