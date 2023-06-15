@@ -24,6 +24,7 @@ urlpatterns = [
     path('doctor/add-patient-details/', views.add_patient_details, name="add_patient_details"),
     path('doctor/doctor-prescription-search-patient/', views.doctor_prescription_search_patient, name="doctor_prescription_search_patient"),
     path('doctor/add-prescription-details/', views.add_prescription_details, name="add_prescription_details"),
+    path('doctor/appointment-history/', views.doctor_appointment_history, name="doctor_appointment_history"),
     path('admin/view-registered-patients/', views.display_registered_patients, name="display_registered_patients"),
     path('receptionist/appointment-homepage/', views.receptionist_appointment_homepage, name="receptionist_appointment_homepage"),
     path('receptionist/view-appointments/', views.receptionist_view_appointments, name="receptionist_view_appointments"),

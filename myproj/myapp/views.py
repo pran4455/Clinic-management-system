@@ -891,5 +891,41 @@ def receptionist_view_appointments(request):
 
     return render(request, "appointment_history.html", data)
 
+def doctor_appointment_history(request):
+    class DoctorAppointmentData:
+        def __init__(self, patient_id, doctor_id, date, timeslot, booking_datetime):
+            self.patientid = patient_id
+            self.doctorid = doctor_id
+            self.date = date
+            self.timeslot = timeslot
+            self.bookingdatetime = booking_datetime
+
+    doctor_id = ""
+    doctor_name = ""
+    with open("doctors.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[3] == CURRENT_USER:
+                doctor_id = row[-1]
+                doctor_name = row[0]
+
+
+    appointmentdata = []
+    with open('Confirmedappointments.csv') as csvfile:
+        reader =csv.reader(csvfile)
+        for row in reader:
+            if row[1] == doctor_id:
+                patient_name = ""
+                with open("patients.csv") as anothercsvfile:
+                    anothereader = csv.reader(anothercsvfile)
+                    for anotherow in anothereader:
+                        if anotherow[-1] == row[0]:
+                            patient_name = anotherow[0]
+                appointmentdata.append(DoctorAppointmentData(patient_name, doctor_name, row[2], row[3], row[4]))
+
+    data = {"appointmentdata": appointmentdata}
+
+    return render(request, "doctor_appointment_history.html", data)
+
 def logout(request):
     return render(request, "index.html")

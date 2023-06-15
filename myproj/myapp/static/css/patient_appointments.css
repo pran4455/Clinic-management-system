@@ -100,3 +100,14 @@ h2 {
   font-size: 13px;
   font-weight: bold;
 }
+
+  .home-link {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .home-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }

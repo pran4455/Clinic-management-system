@@ -64,3 +64,14 @@ body {
   textarea{
     resize: none;
   }
+
+    .home-link {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .home-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
