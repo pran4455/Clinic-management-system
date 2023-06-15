@@ -24,10 +24,35 @@ body {
     color: #333;
   }
 
-  .button-group {
+  form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  .input-group label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-left: 5px;
+  }
+
+  .input-group input[type="text"] {
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: none;
+    background-color: #f0f0f0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
   }
 
   button {
@@ -46,12 +71,12 @@ body {
   }
 
   .home-link {
-  font-size: 14px;
-  margin-top: 20px;
+    font-size: 14px;
+    margin-top: 20px;
   }
 
   .home-link a {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
   }

@@ -1,0 +1,5 @@
+Cough
+cold
+fever
+headache
+running nose
