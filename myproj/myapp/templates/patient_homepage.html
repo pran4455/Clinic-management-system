@@ -17,7 +17,7 @@
     </div>
     <h2>Patient Home</h2>
     <div class="main-options">
-      <a href="/clinic/patient/book-appointment/">
+      <a href="/clinic/patient/appointment-homepage/">
         <div class="option">
           <img src="{% static 'img/ico/appointment.png' %}" alt="Appointments">
           <span>Appointments</span>
@@ -37,5 +37,10 @@
       </a>
     </div>
   </div>
+{% if alertmessage %}
+  <script>
+    alert('{{alertmessage}}');
+  </script>
+  {% endif %}
 </body>
 </html>

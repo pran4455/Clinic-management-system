@@ -1,0 +1,5 @@
+Fever
+Cough
+Sore Throat
+Fatigue
+Body Aches

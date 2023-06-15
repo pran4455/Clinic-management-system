@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Appointment History</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/appointment_history.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>All Appointments</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Patient Name</th>
+          <th>Doctor Name</th>
+          <th>Date</th>
+          <th>Time Slot</th>
+          <th>Booking Date and Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appointment in appointmentdata %}
+        <tr>
+          <td>{{ appointment.patientid }}</td>
+          <td>{{ appointment.doctorid }}</td>
+          <td>{{ appointment.date }}</td>
+          <td>{{ appointment.timeslot }}</td>
+          <td>{{ appointment.bookingdatetime }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="home-link">
+      <a href="/clinic/receptionist/">Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>
