@@ -59,7 +59,6 @@ button:hover {
 input[type="text"],
 input[type="number"],
 input[type="date"],
-select,
 textarea {
     padding: 10px 15px;
     border-radius: 6px;
