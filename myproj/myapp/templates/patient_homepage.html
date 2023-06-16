@@ -1,46 +1,46 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Patient Home</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/patient_home.css' %}">
-</head>
-<body>
-  <div class="container">
-    <div class="profile-dropdown">
-      <img src="{% static 'img/ico/profile.png' %}" alt="Profile" class="profile-icon">
-      <div class="dropdown-content">
-        <a href="/clinic/personal-details/">View Profile </a>
-        <a href="/clinic/login/">Log Out </a>
-      </div>
-    </div>
-    <h2>Patient Home</h2>
-    <div class="main-options">
-      <a href="/clinic/patient/appointment-homepage/">
-        <div class="option">
-          <img src="{% static 'img/ico/appointment.png' %}" alt="Appointments">
-          <span>Appointments</span>
+    <head>
+        <title>Patient Home</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/patient_home.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="profile-dropdown">
+                <img src="{% static 'img/ico/profile.png' %}" alt="Profile" class="profile-icon">
+                <div class="dropdown-content">
+                    <a href="/clinic/personal-details/">View Profile </a>
+                    <a href="/clinic/login/">Log Out </a>
+                </div>
+            </div>
+            <h2>Patient Home</h2>
+            <div class="main-options">
+                <a href="/clinic/patient/appointment-homepage/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/appointment.png' %}" alt="Appointments">
+                        <span>Appointments</span>
+                    </div>
+                </a>
+                <a href="/clinic/patient/view-payments/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/transactions.png' %}" alt="Fee Transactions">
+                        <span>Transactions</span>
+                    </div>
+                </a>
+                <a href="/clinic/patient/view-history/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/view_history.png' %}" alt="View History">
+                        <span>View History</span>
+                    </div>
+                </a>
+            </div>
         </div>
-      </a>
-      <a href="/clinic/patient/view-payments/">
-        <div class="option">
-          <img src="{% static 'img/ico/transactions.png' %}" alt="Fee Transactions">
-          <span>Transactions</span>
-        </div>
-      </a>
-      <a href="/clinic/patient/view-history/">
-        <div class="option">
-          <img src="{% static 'img/ico/view_history.png' %}" alt="View History">
-          <span>View History</span>
-        </div>
-      </a>
-    </div>
-  </div>
-{% if alertmessage %}
-  <script>
-    alert('{{alertmessage}}');
-  </script>
-  {% endif %}
-</body>
+        {% if alertmessage %}
+        <script>
+            alert('{{alertmessage}}');
+        </script>
+        {% endif %}
+    </body>
 </html>

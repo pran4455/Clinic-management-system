@@ -1,41 +1,41 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Doctor Home</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/doctor_home.css' %}">
-</head>
-<body>
-  <div class="container">
-    <div class="profile-dropdown">
-      <img src="{% static 'img/ico/profile.png' %}" alt="Profile" class="profile-icon">
-      <div class="dropdown-content">
-        <a href="/clinic/personal-details/">View Profile </a>
-        <a href="/clinic/logout/">Log Out </a>
-      </div>
-    </div>
-    <h2>Doctor Home</h2>
-    <div class="main-options">
-      <a href="/clinic/doctor/appointment-history/">
-        <div class="option">
-          <img src="{% static 'img/ico/appointment.png' %}" alt="Appointments">
-          <span>Appointments</span>
+    <head>
+        <title>Doctor Home</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/doctor_home.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="profile-dropdown">
+                <img src="{% static 'img/ico/profile.png' %}" alt="Profile" class="profile-icon">
+                <div class="dropdown-content">
+                    <a href="/clinic/personal-details/">View Profile </a>
+                    <a href="/clinic/logout/">Log Out </a>
+                </div>
+            </div>
+            <h2>Doctor Home</h2>
+            <div class="main-options">
+                <a href="/clinic/doctor/appointment-history/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/appointment.png' %}" alt="Appointments">
+                        <span>Appointments</span>
+                    </div>
+                </a>
+                <a href="/clinic/doctor/doctor-prescription-search-patient/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/prescription.png' %}" alt="Fee Transactions">
+                        <span>Add Prescription</span>
+                    </div>
+                </a>
+                <a href="/clinic/doctor/doctor-search-patient/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/patient.png' %}" alt="Patient Details">
+                        <span>Patient Details</span>
+                    </div>
+                </a>
+            </div>
         </div>
-      </a>
-      <a href="/clinic/doctor/doctor-prescription-search-patient/">
-        <div class="option">
-          <img src="{% static 'img/ico/prescription.png' %}" alt="Fee Transactions">
-          <span>Add Prescription</span>
-        </div>
-      </a>
-      <a href="/clinic/doctor/doctor-search-patient/">
-        <div class="option">
-          <img src="{% static 'img/ico/patient.png' %}" alt="Patient Details">
-          <span>Patient Details</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</body>
+    </body>
 </html>

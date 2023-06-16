@@ -55,14 +55,14 @@ urlpatterns = [
         name="display_registered_patients",
     ),
     path(
-      "admin/view-registered-receptionists/",
-      views.display_registered_receptionists,
-      name="display_registered_receptionists",
+        "admin/view-registered-receptionists/",
+        views.display_registered_receptionists,
+        name="display_registered_receptionists",
     ),
     path(
-      "admin/view-registered-doctors/",
-      views.display_registered_doctors,
-      name="display_registered_doctors",
+        "admin/view-registered-doctors/",
+        views.display_registered_doctors,
+        name="display_registered_doctors",
     ),
     path(
         "receptionist/appointment-homepage/",
@@ -97,13 +97,9 @@ urlpatterns = [
     path(
         "receptionist/transaction-search-patient/",
         views.receptionist_transaction_search_patient,
-        name="receptionist_transaction_search_patient"
+        name="receptionist_transaction_search_patient",
     ),
-    path(
-        "receptionist/payment-form/",
-        views.payment_form,
-        name="payment_form"
-    ),
+    path("receptionist/payment-form/", views.payment_form, name="payment_form"),
     path(
         "patient/book-appointment/",
         views.patient_book_appointment,
@@ -123,22 +119,26 @@ urlpatterns = [
     path(
         "patient/view-history/", views.patient_view_history, name="patient_view_history"
     ),
-    path("patient/view-payments/", views.patient_view_payments, name="patient_view_payments"),
-    path("receptionist/view-payments/", views.receptionist_view_payments, name="receptionist_view_payments"),
+    path(
+        "patient/view-payments/",
+        views.patient_view_payments,
+        name="patient_view_payments",
+    ),
+    path(
+        "receptionist/view-payments/",
+        views.receptionist_view_payments,
+        name="receptionist_view_payments",
+    ),
     path(
         "receptionist/time-slot/",
         views.receptionist_time_slot,
         name="receptionist_time_slot",
     ),
-    path(
-        "admin/register-doctor/",
-        views.doctor_register,
-        name="doctor_register"
-    ),
+    path("admin/register-doctor/", views.doctor_register, name="doctor_register"),
     path(
         "admin/register-receptionist/",
         views.receptionist_register,
-        name="receptionist_register"
+        name="receptionist_register",
     ),
     path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
     # path('validate-otp/', lambda request: redirect('/clinic/forgot-password/'), name="validate_otp")

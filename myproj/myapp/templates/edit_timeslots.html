@@ -1,65 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Select Time Slots</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/edit_timeslots.css' %}">
-</head>
-<body>
-    <div class="container">
-
-        <form method="post" action="{% url 'receptionist_time_slot' %}">
-            {% csrf_token %}
-            <h1>Select Time Slots</h1>
-            <div class="input-group">
-                <label for="doctor">Doctor Name:</label>
-                <select id="doctor" name="doctor" required>
-                    <option value="">Select Doctor</option>
-                    {% for doctor in doctors %}
-                    <option value="{{ doctor.name }}">{{ doctor.name }}</option>
-                    {% endfor %}}
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="date">Select Date:</label>
-                <input type="date" id="date" name="date" required>
-            </div>
-            <div class="input-group">
-                <p>Select Time Slots:</p>
-                <div class="time-slots">
-                    <input type="checkbox" id="slot1" name="slots" value="slot1">
-                    <label for="slot1">09:00 AM to 09:30 AM</label><br>
-                    <input type="checkbox" id="slot2" name="slots" value="slot2">
-                    <label for="slot2">09:30 AM to 10:00 AM</label><br>
-                    <input type="checkbox" id="slot3" name="slots" value="slot3">
-                    <label for="slot3">10:00 AM to 10:30 AM</label><br>
-                    <input type="checkbox" id="slot4" name="slots" value="slot4">
-                    <label for="slot4">10:30 AM to 11:00 AM</label><br>
-                    <input type="checkbox" id="slot5" name="slots" value="slot5">
-                    <label for="slot5">11:00 AM to 11:30 AM</label><br>
-                    <input type="checkbox" id="slot6" name="slots" value="slot6">
-                    <label for="slot6">1:30 PM to 2:00 PM</label><br>
-                    <input type="checkbox" id="slot7" name="slots" value="slot7">
-                    <label for="slot7">2:00 PM to 2:30 PM</label><br>
-                    <input type="checkbox" id="slot8" name="slots" value="slot8">
-                    <label for="slot8">2:30 PM to 3:00 PM</label><br>
-                    <input type="checkbox" id="slot9" name="slots" value="slot9">
-                    <label for="slot9">3:00 PM to 3:30 PM</label><br>
-                    <input type="checkbox" id="slot10" name="slots" value="slot10">
-                    <label for="slot10">3:30 PM to 4:00 PM</label><br>
-                    <input type="checkbox" id="slot11" name="slots" value="slot11">
-                    <label for="slot11">4:00 PM to 4:30 PM</label><br>
-                    <input type="checkbox" id="slot12" name="slots" value="slot12">
-                    <label for="slot12">4:30 PM to 5:00 PM</label><br>
+    <head>
+        <title>Select Time Slots</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/edit_timeslots.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <form method="post" action="{% url 'receptionist_time_slot' %}">
+                {% csrf_token %}
+                <h1>Select Time Slots</h1>
+                <div class="input-group">
+                    <label for="doctor">Doctor Name:</label>
+                    <select id="doctor" name="doctor" required>
+                        <option value="">Select Doctor</option>
+                        {% for doctor in doctors %}
+                        <option value="{{ doctor.name }}">{{ doctor.name }}</option>
+                        {% endfor %}}
+                    </select>
                 </div>
+                <div class="input-group">
+                    <label for="date">Select Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="input-group">
+                    <p>Select Time Slots:</p>
+                    <div class="time-slots">
+                        <input type="checkbox" id="slot1" name="slots" value="slot1">
+                        <label for="slot1">09:00 AM to 09:30 AM</label><br>
+                        <input type="checkbox" id="slot2" name="slots" value="slot2">
+                        <label for="slot2">09:30 AM to 10:00 AM</label><br>
+                        <input type="checkbox" id="slot3" name="slots" value="slot3">
+                        <label for="slot3">10:00 AM to 10:30 AM</label><br>
+                        <input type="checkbox" id="slot4" name="slots" value="slot4">
+                        <label for="slot4">10:30 AM to 11:00 AM</label><br>
+                        <input type="checkbox" id="slot5" name="slots" value="slot5">
+                        <label for="slot5">11:00 AM to 11:30 AM</label><br>
+                        <input type="checkbox" id="slot6" name="slots" value="slot6">
+                        <label for="slot6">1:30 PM to 2:00 PM</label><br>
+                        <input type="checkbox" id="slot7" name="slots" value="slot7">
+                        <label for="slot7">2:00 PM to 2:30 PM</label><br>
+                        <input type="checkbox" id="slot8" name="slots" value="slot8">
+                        <label for="slot8">2:30 PM to 3:00 PM</label><br>
+                        <input type="checkbox" id="slot9" name="slots" value="slot9">
+                        <label for="slot9">3:00 PM to 3:30 PM</label><br>
+                        <input type="checkbox" id="slot10" name="slots" value="slot10">
+                        <label for="slot10">3:30 PM to 4:00 PM</label><br>
+                        <input type="checkbox" id="slot11" name="slots" value="slot11">
+                        <label for="slot11">4:00 PM to 4:30 PM</label><br>
+                        <input type="checkbox" id="slot12" name="slots" value="slot12">
+                        <label for="slot12">4:30 PM to 5:00 PM</label><br>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <button type="submit" id="submit">Submit</button>
+                </div>
+            </form>
+            <div class="home-link">
+                <a href="/clinic/receptionist/">Back to Home Page</a>
             </div>
-            <div class="input-group">
-                <button type="submit" id="submit">Submit</button>
-            </div>
-        </form>
-         <div class="home-link">
-      <a href="/clinic/receptionist/">Back to Home Page</a>
-    </div>
-    </div>
-</body>
+        </div>
+    </body>
 </html>

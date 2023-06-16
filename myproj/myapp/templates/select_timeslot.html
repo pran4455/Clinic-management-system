@@ -1,84 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Book Appointment</title>
-  <meta charset="UTF-8">
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/select_timeslot.css' %}">
-</head>
-<body>
-  <div class="container">
-    <h2>Book Appointment</h2>
-    <form method="post" action="{% url 'view_timeslots' %}">
-      {% csrf_token %}
-    <div class="time-slots">
-      <input type="radio" id="slot1" name="time-slot" onclick="changeBorder()" value="09:00-09:30">
-      <label for="slot1" id="lblslot1">09:00 AM to 09:30 AM</label>
-      <input type="radio" id="slot2" name="time-slot" onclick="changeBorder()" value="09:30-10:00">
-      <label for="slot2" id="lblslot2">09:30 AM to 10:00 AM</label>
-      <input type="radio" id="slot3" name="time-slot" onclick="changeBorder()" value="10:00-10:30">
-      <label for="slot3" id="lblslot3">10:00 AM to 10:30 AM</label>
-      <input type="radio" id="slot4" name="time-slot" onclick="changeBorder()" value="10:30-11:00">
-      <label for="slot4" id="lblslot4">10:30 AM to 11:00 AM</label>
-      <input type="radio" id="slot5" name="time-slot" onclick="changeBorder()" value="11:00-11:30">
-      <label for="slot5" id="lblslot5">11:00 AM to 11:30 AM</label>
-      <input type="radio" id="slot6" name="time-slot" onclick="changeBorder()" value="13:30-14:00">
-      <label for="slot6" id="lblslot6">1:30 PM to 2:00 PM</label>
-      <input type="radio" id="slot7" name="time-slot" onclick="changeBorder()" value="14:00-14:30">
-      <label for="slot7" id="lblslot7">2:00 PM to 2:30 PM</label>
-      <input type="radio" id="slot8" name="time-slot" onclick="changeBorder()" value="14:30-15:00">
-      <label for="slot8" id="lblslot8">2:30 PM to 3:00 PM</label>
-      <input type="radio" id="slot9" name="time-slot" onclick="changeBorder()" value="15:00-15:30">
-      <label for="slot9" id="lblslot9">3:00 PM to 3:30 PM</label>
-      <input type="radio" id="slot10" name="time-slot" onclick="changeBorder()" value="15:30-16:00">
-      <label for="slot10" id="lblslot10">3:30 PM to 4:00 PM</label>
-      <input type="radio" id="slot11" name="time-slot" onclick="changeBorder()" value="16:00-16:30">
-      <label for="slot11" id="lblslot11">4:00 PM to 4:30 PM</label>
-      <input type="radio" id="slot12" name="time-slot" onclick="changeBorder()" value="16:30-17:00">
-      <label for="slot12" id="lblslot12">4:30 PM to 5:00 PM</label>
-    </div>
-      <input id="rdvalue" name="rdvalue" type="text" hidden><br>
-      <input id="patid" name="patid" type="text" hidden><br>
-      <input id="docid" name="docid" type="text" hidden><br>
-      <input id="dt" name="dt" type="text" hidden><br>
-    <button class="book-appointment-btn" type="submit">Book Appointment</button>
-        </form>
-    <div class="home-link">
-      <a href="/clinic/receptionist/">Back to Home</a>
-    </div>
-  </div>
+    <head>
+        <title>Book Appointment</title>
+        <meta charset="UTF-8">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/select_timeslot.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Book Appointment</h2>
+            <form method="post" action="{% url 'view_timeslots' %}">
+                {% csrf_token %}
+                <div class="time-slots">
+                    <input type="radio" id="slot1" name="time-slot" onclick="changeBorder()" value="09:00-09:30">
+                    <label for="slot1" id="lblslot1">09:00 AM to 09:30 AM</label>
+                    <input type="radio" id="slot2" name="time-slot" onclick="changeBorder()" value="09:30-10:00">
+                    <label for="slot2" id="lblslot2">09:30 AM to 10:00 AM</label>
+                    <input type="radio" id="slot3" name="time-slot" onclick="changeBorder()" value="10:00-10:30">
+                    <label for="slot3" id="lblslot3">10:00 AM to 10:30 AM</label>
+                    <input type="radio" id="slot4" name="time-slot" onclick="changeBorder()" value="10:30-11:00">
+                    <label for="slot4" id="lblslot4">10:30 AM to 11:00 AM</label>
+                    <input type="radio" id="slot5" name="time-slot" onclick="changeBorder()" value="11:00-11:30">
+                    <label for="slot5" id="lblslot5">11:00 AM to 11:30 AM</label>
+                    <input type="radio" id="slot6" name="time-slot" onclick="changeBorder()" value="13:30-14:00">
+                    <label for="slot6" id="lblslot6">1:30 PM to 2:00 PM</label>
+                    <input type="radio" id="slot7" name="time-slot" onclick="changeBorder()" value="14:00-14:30">
+                    <label for="slot7" id="lblslot7">2:00 PM to 2:30 PM</label>
+                    <input type="radio" id="slot8" name="time-slot" onclick="changeBorder()" value="14:30-15:00">
+                    <label for="slot8" id="lblslot8">2:30 PM to 3:00 PM</label>
+                    <input type="radio" id="slot9" name="time-slot" onclick="changeBorder()" value="15:00-15:30">
+                    <label for="slot9" id="lblslot9">3:00 PM to 3:30 PM</label>
+                    <input type="radio" id="slot10" name="time-slot" onclick="changeBorder()" value="15:30-16:00">
+                    <label for="slot10" id="lblslot10">3:30 PM to 4:00 PM</label>
+                    <input type="radio" id="slot11" name="time-slot" onclick="changeBorder()" value="16:00-16:30">
+                    <label for="slot11" id="lblslot11">4:00 PM to 4:30 PM</label>
+                    <input type="radio" id="slot12" name="time-slot" onclick="changeBorder()" value="16:30-17:00">
+                    <label for="slot12" id="lblslot12">4:30 PM to 5:00 PM</label>
+                </div>
+                <input id="rdvalue" name="rdvalue" type="text" hidden><br>
+                <input id="patid" name="patid" type="text" hidden><br>
+                <input id="docid" name="docid" type="text" hidden><br>
+                <input id="dt" name="dt" type="text" hidden><br>
+                <button class="book-appointment-btn" type="submit">Book Appointment</button>
+            </form>
+            <div class="home-link">
+                <a href="/clinic/receptionist/">Back to Home</a>
+            </div>
+        </div>
+        <script>
+            function changeBorder(){
+                for (let i = 1; i <= 12; i++){
+                    var chk = document.getElementById("slot".concat(i.toString()));
+                    var lbl = document.getElementById("lblslot".concat(i.toString()));
+                    if (chk.checked){
+                        lbl.style.border = "2px solid #000000"
+                        var txtbx = document.getElementById("rdvalue");
+                        txtbx.value = chk.value;
+                    }
+                    else{
+                        lbl.style.border = "1px solid #ccc";
+                    }
+                }
 
-  <script>
-    function changeBorder(){
-        for (let i = 1; i <= 12; i++){
-            var chk = document.getElementById("slot".concat(i.toString()));
-            var lbl = document.getElementById("lblslot".concat(i.toString()));
-            if (chk.checked){
-                lbl.style.border = "2px solid #000000"
-                var txtbx = document.getElementById("rdvalue");
-                txtbx.value = chk.value;
             }
-            else{
-                lbl.style.border = "1px solid #ccc";
+
+            {% for obj in colors %}
+              lbl = document.getElementById("{{ obj.lblname }}");
+              rd = document.getElementById("{{ obj.rdname }}");
+              lbl.style.backgroundColor  = "{{ obj.color }}";
+              document.getElementById("patid").value = "{{patid}}";
+              document.getElementById("docid").value = "{{docid}}";
+              document.getElementById("dt").value = "{{dt}}";
+
+              if ("{{ obj.color }}" == "#ff6661"){
+                rd.disabled = true;
             }
-        }
+            {% endfor %}
 
-    }
-
-    {% for obj in colors %}
-      lbl = document.getElementById("{{ obj.lblname }}");
-      rd = document.getElementById("{{ obj.rdname }}");
-      lbl.style.backgroundColor  = "{{ obj.color }}";
-      document.getElementById("patid").value = "{{patid}}";
-      document.getElementById("docid").value = "{{docid}}";
-      document.getElementById("dt").value = "{{dt}}";
-
-      if ("{{ obj.color }}" == "#ff6661"){
-        rd.disabled = true;
-    }
-    {% endfor %}
-
-  </script>
-</body>
+        </script>
+    </body>
 </html>
-

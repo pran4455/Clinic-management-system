@@ -1,89 +1,73 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Add Patient Details</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/doctor_add_patient_details.css' %}">
-</head>
-<body>
-  <div class="container">
-    <h2>Add Patient Details</h2>
-    <form method="post" action="{% url 'add_patient_details' %}">
-      {% csrf_token %}
-      <div class="grid-container">
-        <div class="grid-item">
-          <label for="unique-id">Unique ID:</label>
-          <input type="text" id="unique-id" name="unique-id" placeholder=" Unique ID" readonly>
+    <head>
+        <title>Add Patient Details</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/doctor_add_patient_details.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Add Patient Details</h2>
+            <form method="post" action="{% url 'add_patient_details' %}">
+                {% csrf_token %}
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <label for="unique-id">Unique ID:</label>
+                        <input type="text" id="unique-id" name="unique-id" placeholder=" Unique ID" readonly>
+                    </div>
+                    <div class="grid-item">
+                        <label for="full-name">Full Name:</label>
+                        <input type="text" id="full-name" name="full-name" placeholder=" Full Name" readonly>
+                    </div>
+                    <div class="grid-item">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" placeholder=" Age" readonly>
+                    </div>
+                    <div class="grid-item">
+                        <label for="sex">Sex:</label>
+                        <input type="text" id="sex" name="sex" placeholder=" Sex" readonly>
+                    </div>
+                    <div class="grid-item">
+                        <label for="phone-number">Phone Number:</label>
+                        <input type="text" id="phone-number" name="phone-number" placeholder=" Phone Number" readonly>
+                    </div>
+                    <div class="grid-item">
+                        <label for="address">Address:</label>
+                        <textarea rows="4" cols="40" id="address" name="address" placeholder=" Address" readonly></textarea>
+                    </div>
+                    <div class="grid-item">
+                        <label for="dental-carries">Dental Carries:</label>
+                        <textarea rows="4" cols="40" id="dental-carries" name="dental-carries" placeholder=" Dental Carries"></textarea>
+                    </div>
+                    <div class="grid-item">
+                        <label for="missing-teeth">Missing Teeth:</label>
+                        <textarea rows="4" cols="40" id="missing-teeth" name="missing-teeth" placeholder=" Missing Teeth"></textarea>
+                    </div>
+                    <div class="grid-item">
+                        <label for="allergy">Allergy:</label>
+                        <textarea rows="4" cols="40" id="allergy" name="allergy" placeholder=" Allergy"></textarea>
+                    </div>
+                    <div class="grid-item">
+                        <label for="abrasions">Abrasions:</label>
+                        <textarea rows="4" cols="40" id="abrasions" name="abrasions" placeholder=" Abrasions"></textarea>
+                    </div>
+                </div>
+                <button type="submit">Save</button>
+            </form>
+            <div class="home-link">
+                <a href="/clinic/doctor/">Back to Home Page</a>
+            </div>
         </div>
-        <div class="grid-item">
-          <label for="full-name">Full Name:</label>
-          <input type="text" id="full-name" name="full-name" placeholder=" Full Name" readonly>
-        </div>
-        <div class="grid-item">
-          <label for="age">Age:</label>
-          <input type="number" id="age" name="age" placeholder=" Age" readonly>
-        </div>
-        <div class="grid-item">
-          <label for="sex">Sex:</label>
-          <input type="text" id="sex" name="sex" placeholder=" Sex" readonly>
-        </div>
-        <div class="grid-item">
-          <label for="phone-number">Phone Number:</label>
-          <input type="text" id="phone-number" name="phone-number" placeholder=" Phone Number" readonly>
-        </div>
-        <div class="grid-item">
-          <label for="address">Address:</label>
-          <textarea rows="4" cols="40" id="address" name="address" placeholder=" Address" readonly></textarea>
-        </div>
-        <div class="grid-item">
-          <label for="dental-carries">Dental Carries:</label>
-          <textarea rows="4" cols="40" id="dental-carries" name="dental-carries" placeholder=" Dental Carries"></textarea>
-        </div>
-        <div class="grid-item">
-          <label for="missing-teeth">Missing Teeth:</label>
-          <textarea rows="4" cols="40" id="missing-teeth" name="missing-teeth" placeholder=" Missing Teeth"></textarea>
-        </div>
-        <div class="grid-item">
-          <label for="allergy">Allergy:</label>
-          <textarea rows="4" cols="40" id="allergy" name="allergy" placeholder=" Allergy"></textarea>
-        </div>
-<!--        <div class="grid-item">-->
-<!--          <label for="examination">Examination:</label>-->
-<!--          <textarea rows="4" cols="40" id="examination" name="examination" placeholder=" Examination"></textarea>-->
-<!--        </div>-->
-        <div class="grid-item">
-          <label for="abrasions">Abrasions:</label>
-          <textarea rows="4" cols="40" id="abrasions" name="abrasions" placeholder=" Abrasions"></textarea>
-        </div>
-<!--        <div class="grid-item">-->
-<!--          <label for="treatment-advice">Treatment Advice:</label>-->
-<!--          <textarea rows="4" cols="40" id="treatment-advice" name="treatment-advice" placeholder=" Treatment Advice"></textarea>-->
-<!--        </div>-->
-<!--        <div class="grid-item">-->
-<!--          <label for="treatment">Treatment:</label>-->
-<!--          <textarea rows="4" cols="40" id="treatment" name="treatment" placeholder=" Treatment"></textarea>-->
-<!--        </div>-->
-<!--        <div class="grid-item">-->
-<!--          <label for="treatment-charges">Treatment Charges:</label>-->
-<!--          <input type="text" id="treatment-charges" name="treatment-charges" placeholder=" Treatment Charges">-->
-<!--        </div>-->
-      </div>
-      <button type="submit">Save</button>
-    </form>
-        <div class="home-link">
-      <a href="/clinic/doctor/">Back to Home Page</a>
-    </div>
-  </div>
-<script>
-  {% if alertmessage %}
-    alert('{{alertmessage}}');
-  {% endif %}
-  document.getElementById("unique-id").value = "{{uniqueid}}";
-  document.getElementById("full-name").value = "{{name}}";
-  document.getElementById("age").value = "{{age}}";
-  document.getElementById("sex").value = "{{sex}}";
-  document.getElementById("phone-number").value = "{{phone}}";
-  document.getElementById("address").value = "{{address}}";
-</script>
-</body>
+        <script>
+            {% if alertmessage %}
+              alert('{{alertmessage}}');
+            {% endif %}
+            document.getElementById("unique-id").value = "{{uniqueid}}";
+            document.getElementById("full-name").value = "{{name}}";
+            document.getElementById("age").value = "{{age}}";
+            document.getElementById("sex").value = "{{sex}}";
+            document.getElementById("phone-number").value = "{{phone}}";
+            document.getElementById("address").value = "{{address}}";
+        </script>
+    </body>
 </html>

@@ -1,56 +1,56 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Admin Home</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/admin_home.css' %}">
-</head>
-<body>
-  <div class="container">
-    <a href="/clinic/login/">
-        <div class="logout">
-          <img src="{% static 'img/ico/logout.png' %}" alt="Log Out">
-          <span>Log Out</span>
+    <head>
+        <title>Admin Home</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/admin_home.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <a href="/clinic/login/">
+                <div class="logout">
+                    <img src="{% static 'img/ico/logout.png' %}" alt="Log Out">
+                    <span>Log Out</span>
+                </div>
+            </a>
+            <h2>Admin Home</h2>
+            <div class="admin-options">
+                <a href="/clinic/admin/view-registered-receptionists/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/view_reception.png' %}" alt="Receptionists">
+                        <span>View Receptionists</span>
+                    </div>
+                </a>
+                <a href="/clinic/admin/view-registered-patients/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/view_patient.png' %}" alt="Patients">
+                        <span>View Patients</span>
+                    </div>
+                </a>
+                <a href="/clinic/admin/view-registered-doctors/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/view_doctor.png' %}" alt="Doctors">
+                        <span>View Doctors</span>
+                    </div>
+                </a>
+                <a href="/clinic/admin/register-doctor/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/edit_doctor.png' %}" alt="Edit Doctor">
+                        <span>Edit Doctor</span>
+                    </div>
+                </a>
+                <a href="/clinic/admin/register-receptionist/">
+                    <div class="option">
+                        <img src="{% static 'img/ico/edit_reception.png' %}" alt="Edit Receptionist">
+                        <span>Edit Receptionist</span>
+                    </div>
+                </a>
+            </div>
         </div>
-    </a>
-    <h2>Admin Home</h2>
-    <div class="admin-options">
-      <a href="/clinic/admin/view-registered-receptionists/">
-        <div class="option">
-          <img src="{% static 'img/ico/view_reception.png' %}" alt="Receptionists">
-          <span>View Receptionists</span>
-        </div>
-      </a>
-      <a href="/clinic/admin/view-registered-patients/">
-        <div class="option">
-          <img src="{% static 'img/ico/view_patient.png' %}" alt="Patients">
-          <span>View Patients</span>
-        </div>
-      </a>
-      <a href="/clinic/admin/view-registered-doctors/">
-        <div class="option">
-          <img src="{% static 'img/ico/view_doctor.png' %}" alt="Doctors">
-          <span>View Doctors</span>
-        </div>
-      </a>
-      <a href="/clinic/admin/register-doctor/">
-        <div class="option">
-          <img src="{% static 'img/ico/edit_doctor.png' %}" alt="Edit Doctor">
-          <span>Edit Doctor</span>
-        </div>
-      </a>
-      <a href="/clinic/admin/register-receptionist/">
-        <div class="option">
-          <img src="{% static 'img/ico/edit_reception.png' %}" alt="Edit Receptionist">
-          <span>Edit Receptionist</span>
-        </div>
-      </a>
-    </div>
-  </div>
-  {% if alertmessage %}
-  <script>
-    alert('{{alertmessage}}');
-  </script>
-  {% endif %}
-</body>
+        {% if alertmessage %}
+        <script>
+            alert('{{alertmessage}}');
+        </script>
+        {% endif %}
+    </body>
 </html>

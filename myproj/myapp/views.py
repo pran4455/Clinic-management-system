@@ -15,8 +15,6 @@ from Graph import Graph
 import QueueDS
 import send_email
 
-# import time
-# from django.contrib import messages
 
 RANDOM_OTP = 0
 RESET_EMAIL = ""
@@ -892,6 +890,7 @@ def display_registered_patients(request):
         data = {"patients": patient_data}
     return render(request, "display_registered_patients.html", data)
 
+
 def display_registered_receptionists(request):
     class Receptionist:
         def __init__(self, row):
@@ -913,6 +912,7 @@ def display_registered_receptionists(request):
             receptionist_data.append(Receptionist(i))
         data = {"receptionists": receptionist_data}
     return render(request, "display_registered_receptionists.html", data)
+
 
 def display_registered_doctors(request):
     class Doctor:
@@ -937,6 +937,7 @@ def display_registered_doctors(request):
 
     return render(request, "display_registered_doctors.html", data)
 
+
 def receptionist_view_appointments(request):
     return render(request, "index.html")
 
@@ -947,6 +948,7 @@ def receptionist_appointment_homepage(request):
 
 def testing(request):
     return render(request, "receptionist_transaction_search_patient.html")
+
 
 def receptionist_transaction_search_patient(request):
     if request.method == "POST":
@@ -1010,6 +1012,7 @@ def receptionist_transaction_search_patient(request):
 
     return render(request, "receptionist_transaction_search_patient.html")
 
+
 def payment_form(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -1032,7 +1035,13 @@ def payment_form(request):
             try:
                 temp = next(reader)
             except StopIteration:
-                return render(request, "homepage.html", {"alertmessage": "Cannot add charges until doctor adds required data!"})
+                return render(
+                    request,
+                    "homepage.html",
+                    {
+                        "alertmessage": "Cannot add charges until doctor adds required data!"
+                    },
+                )
 
             temp[-1] = charges
 
@@ -1047,23 +1056,31 @@ def payment_form(request):
 
         subject = "Payment Status"
 
-        body = f"Hello {name},\n" \
-               f"\tThis email is your invoice regarding your last payment at the clinic.\n" \
-               f"The payment details are as follows:\n" \
-               f"Name of the patient: {name}\n" \
-               f"Patient ID: {uniqueid}\n" \
-               f"Email: {email}\n" \
-               f"Amount charged: ₹{charges}\n" \
-               f"Charge Type: {charge_type}\n" \
-               f"Charging Date and Time: {date_time}\n" \
-               f"Wishing you a speedy recovery.\n" \
-               f"Thank You.\n"
+        body = (
+            f"Hello {name},\n"
+            f"\tThis email is your invoice regarding your last payment at the clinic.\n"
+            f"The payment details are as follows:\n"
+            f"Name of the patient: {name}\n"
+            f"Patient ID: {uniqueid}\n"
+            f"Email: {email}\n"
+            f"Amount charged: ₹{charges}\n"
+            f"Charge Type: {charge_type}\n"
+            f"Charging Date and Time: {date_time}\n"
+            f"Wishing you a speedy recovery.\n"
+            f"Thank You.\n"
+        )
 
         send_email.send_email(email, subject, body)
 
-        return render(request, "homepage.html", {"alertmessage": "Transaction saved successfully!"})
+        return render(
+            request,
+            "homepage.html",
+            {"alertmessage": "Transaction saved successfully!"},
+        )
 
     return render(request, "payment_form.html")
+
+
 def receptionist_time_slot(request):
     if request.method == "POST":
         if not os.path.exists("Confirmedappointments.csv"):
@@ -1712,8 +1729,8 @@ def patient_view_history(request):
 
     return render(request, "view_patient_history.html", data)
 
-def patient_view_payments(request):
 
+def patient_view_payments(request):
     class TransactionData:
         def __init__(self, name, id, email, amount, chargetype, date_time):
             self.name = name
@@ -1729,9 +1746,13 @@ def patient_view_payments(request):
         reader = csv.reader(csvfile)
         for row in reader:
             if row[2] == CURRENT_USER:
-                transactiondatas.append(TransactionData(row[0], row[1], row[2], row[3], row[4], row[5]))
+                transactiondatas.append(
+                    TransactionData(row[0], row[1], row[2], row[3], row[4], row[5])
+                )
 
-    return render(request, "patient_payments.html", {"transactiondatas": transactiondatas})
+    return render(
+        request, "patient_payments.html", {"transactiondatas": transactiondatas}
+    )
 
 
 def receptionist_view_payments(request):
@@ -1749,9 +1770,13 @@ def receptionist_view_payments(request):
     with open("transactions.csv") as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            transactiondatas.append(TransactionData(row[0], row[1], row[2], row[3], row[4], row[5]))
+            transactiondatas.append(
+                TransactionData(row[0], row[1], row[2], row[3], row[4], row[5])
+            )
 
-    return render(request, "receptionist_payments.html", {"transactiondatas": transactiondatas})
+    return render(
+        request, "receptionist_payments.html", {"transactiondatas": transactiondatas}
+    )
 
 
 def doctor_register(request):
@@ -1769,7 +1794,9 @@ def doctor_register(request):
 
         if password != confirm_password:
             return render(
-                request, "doctor_register.html", {"alertmessage": "Passwords do not match."}
+                request,
+                "doctor_register.html",
+                {"alertmessage": "Passwords do not match."},
             )
 
         with open("register.csv", "r") as csvfile:
@@ -1822,7 +1849,6 @@ def doctor_register(request):
                 ]
             )
 
-
         return render(
             request,
             "admin_homepage.html",
@@ -1830,6 +1856,7 @@ def doctor_register(request):
         )
 
     return render(request, "doctor_register.html")
+
 
 def receptionist_register(request):
     if request.method == "POST":
@@ -1846,7 +1873,9 @@ def receptionist_register(request):
 
         if password != confirm_password:
             return render(
-                request, "receptionist_register.html", {"alertmessage": "Passwords do not match."}
+                request,
+                "receptionist_register.html",
+                {"alertmessage": "Passwords do not match."},
             )
 
         with open("register.csv", "r") as csvfile:
@@ -1898,7 +1927,6 @@ def receptionist_register(request):
                     uniqueid_random,
                 ]
             )
-
 
         return render(
             request,
