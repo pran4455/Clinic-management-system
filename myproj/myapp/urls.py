@@ -55,6 +55,16 @@ urlpatterns = [
         name="display_registered_patients",
     ),
     path(
+      "admin/view-registered-receptionists/",
+      views.display_registered_receptionists,
+      name="display_registered_receptionists",
+    ),
+    path(
+      "admin/view-registered-doctors/",
+      views.display_registered_doctors,
+      name="display_registered_doctors",
+    ),
+    path(
         "receptionist/appointment-homepage/",
         views.receptionist_appointment_homepage,
         name="receptionist_appointment_homepage",

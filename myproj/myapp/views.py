@@ -892,6 +892,50 @@ def display_registered_patients(request):
         data = {"patients": patient_data}
     return render(request, "display_registered_patients.html", data)
 
+def display_registered_receptionists(request):
+    class Receptionist:
+        def __init__(self, row):
+            self.uniqueid = row[10]
+            self.name = row[0]
+            self.phonenumber = row[1]
+            self.dob = row[2]
+            self.email = row[3]
+            self.address = row[5].replace("-", ",").replace(";", "\\n")
+            self.age = row[6]
+            self.gender = row[7]
+            self.blood = row[8]
+            self.privilege = "Receptionist" if row[9] == "rec" else ""
+
+    with open("receptionists.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        receptionist_data = []
+        for i in reader:
+            receptionist_data.append(Receptionist(i))
+        data = {"receptionists": receptionist_data}
+    return render(request, "display_registered_receptionists.html", data)
+
+def display_registered_doctors(request):
+    class Doctor:
+        def __init__(self, row):
+            self.uniqueid = row[10]
+            self.name = row[0]
+            self.phonenumber = row[1]
+            self.dob = row[2]
+            self.email = row[3]
+            self.address = row[5].replace("-", ",").replace(";", "\\n")
+            self.age = row[6]
+            self.gender = row[7]
+            self.blood = row[8]
+            self.privilege = "Doctor" if row[9] == "doc" else ""
+
+    with open("doctors.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        doctor_data = []
+        for i in reader:
+            doctor_data.append(Doctor(i))
+        data = {"doctors": doctor_data}
+
+    return render(request, "display_registered_doctors.html", data)
 
 def receptionist_view_appointments(request):
     return render(request, "index.html")
