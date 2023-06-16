@@ -725,7 +725,7 @@ def add_patient_details(request):
             )
         return render(
             request,
-            "doctor_search_patient.html",
+            "doctor_prescription_search_patient.html",
             {"alertmessage": "Details saved successfully!"},
         )
 
@@ -902,9 +902,124 @@ def receptionist_appointment_homepage(request):
 
 
 def testing(request):
-    return render(request, "receptionist_book_appointment.html")
+    return render(request, "receptionist_transaction_search_patient.html")
 
+def receptionist_transaction_search_patient(request):
+    if request.method == "POST":
+        patient_id = request.POST.get("patientid")
+        patient_name = request.POST.get("patientname")
+        current_name = ""
+        if patient_id:
+            with open("register.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[-1].strip() == patient_id.strip():
+                        current_name = row[0]
+                        break
+                else:
+                    return render(
+                        request,
+                        "receptionist_transaction_search_patient.html",
+                        {"alertmessage": "Patient not found!"},
+                    )
 
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    data = {
+                        "uniqueid": row[-4],
+                        "name": row[0],
+                        "email": row[3],
+                    }
+                    break
+
+            return render(request, "payment_form.html", data)
+
+        elif patient_name:
+            current_name = patient_name
+            with open("patients.csv") as csvfile:
+                reader = csv.reader(csvfile)
+                if current_name not in [name[0] for name in reader]:
+                    return render(
+                        request,
+                        "receptionist_transaction_search_patient.html",
+                        {"alertmessage": "Patient not found!"},
+                    )
+
+            with open(f"./myapp/csv/{current_name}.csv", "r") as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    data = {
+                        "uniqueid": row[-4],
+                        "name": row[0],
+                        "email": row[3],
+                    }
+                    break
+
+            return render(request, "payment_form.html", data)
+        else:
+            return render(
+                request,
+                "receptionist_transaction_search_patient.html",
+                {"alertmessage": "Fill any one field!"},
+            )
+
+    return render(request, "receptionist_transaction_search_patient.html")
+
+def payment_form(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        name = request.POST.get("name")
+        uniqueid = request.POST.get("unique-id")
+        charges = request.POST.get("treatment-charges")
+        charge_type = request.POST.get("charge-type")
+
+        date_time = datetime.datetime.now()
+
+        with open("transactions.csv", "a", newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([name, uniqueid, email, charges, charge_type, date_time])
+
+        contents_to_write = []
+        with open(f"./myapp/csv/{name}.csv", "r") as oldfile:
+            reader = csv.reader(oldfile)
+            contents_to_write.append(next(reader))
+
+            try:
+                temp = next(reader)
+            except StopIteration:
+                return render(request, "homepage.html", {"alertmessage": "Cannot add charges until doctor adds required data!"})
+
+            temp[-1] = charges
+
+            contents_to_write.append(temp)
+
+            for row in reader:
+                contents_to_write.append(row)
+
+        with open(f"./myapp/csv/{name}.csv", "w", newline="") as newfile:
+            writer = csv.writer(newfile)
+            writer.writerows(contents_to_write)
+
+        subject = "Payment Status"
+
+        body = f"Hello {name},\n" \
+               f"\tThis email is your invoice regarding your last payment at the clinic.\n" \
+               f"The payment details are as follows:\n" \
+               f"Name of the patient: {name}\n" \
+               f"Patient ID: {uniqueid}\n" \
+               f"Email: {email}\n" \
+               f"Amount charged: ₹{charges}\n" \
+               f"Charge Type: {charge_type}\n" \
+               f"Charging Date and Time: {date_time}\n" \
+               f"Wishing you a speedy recovery.\n" \
+               f"Thank You.\n"
+
+        send_email.send_email(email, subject, body)
+
+        return render(request, "homepage.html", {"alertmessage": "Transaction saved successfully!"})
+
+    return render(request, "payment_form.html")
 def receptionist_time_slot(request):
     if request.method == "POST":
         if not os.path.exists("Confirmedappointments.csv"):
@@ -967,6 +1082,7 @@ def receptionist_book_appointment(request):
                 for row in reader:
                     if row[-1].strip() == patient_id.strip():
                         current_name = row[0]
+                        break
                 else:
                     return render(
                         request,
@@ -1551,3 +1667,44 @@ def patient_view_history(request):
     CURRENT_USER = username
 
     return render(request, "view_patient_history.html", data)
+
+def patient_view_payments(request):
+
+    class TransactionData:
+        def __init__(self, name, id, email, amount, chargetype, date_time):
+            self.name = name
+            self.id = id
+            self.email = email
+            self.amount = amount
+            self.chargetype = chargetype
+            self.date_time = date_time
+
+    transactiondatas = []
+
+    with open("transactions.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            if row[2] == CURRENT_USER:
+                transactiondatas.append(TransactionData(row[0], row[1], row[2], row[3], row[4], row[5]))
+
+    return render(request, "patient_payments.html", {"transactiondatas": transactiondatas})
+
+
+def receptionist_view_payments(request):
+    class TransactionData:
+        def __init__(self, name, id, email, amount, chargetype, date_time):
+            self.name = name
+            self.id = id
+            self.email = email
+            self.amount = amount
+            self.chargetype = chargetype
+            self.date_time = date_time
+
+    transactiondatas = []
+
+    with open("transactions.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            transactiondatas.append(TransactionData(row[0], row[1], row[2], row[3], row[4], row[5]))
+
+    return render(request, "receptionist_payments.html", {"transactiondatas": transactiondatas})

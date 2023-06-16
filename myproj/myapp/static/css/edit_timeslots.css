@@ -18,8 +18,8 @@ body {
   max-width: 550px;
   width: 100%;
   text-align: center;
-  background-color: white;
   opacity: 1;
+  margin-top: 200px;
 }
 
 h2 {

@@ -85,6 +85,16 @@ urlpatterns = [
         name="receptionist_view_local_appointments",
     ),
     path(
+        "receptionist/transaction-search-patient/",
+        views.receptionist_transaction_search_patient,
+        name="receptionist_transaction_search_patient"
+    ),
+    path(
+        "receptionist/payment-form/",
+        views.payment_form,
+        name="payment_form"
+    ),
+    path(
         "patient/book-appointment/",
         views.patient_book_appointment,
         name="patient_book_appointment",
@@ -103,6 +113,8 @@ urlpatterns = [
     path(
         "patient/view-history/", views.patient_view_history, name="patient_view_history"
     ),
+    path("patient/view-payments/", views.patient_view_payments, name="patient_view_payments"),
+    path("receptionist/view-payments/", views.receptionist_view_payments, name="receptionist_view_payments"),
     path(
         "receptionist/time-slot/",
         views.receptionist_time_slot,
