@@ -33,25 +33,24 @@
           <span>View Doctors</span>
         </div>
       </a>
-      <a href="#">
+      <a href="/clinic/admin/register-doctor/">
         <div class="option">
           <img src="{% static 'img/ico/edit_doctor.png' %}" alt="Edit Doctor">
           <span>Edit Doctor</span>
         </div>
       </a>
-      <a href="#">
+      <a href="/clinic/admin/register-receptionist/">
         <div class="option">
           <img src="{% static 'img/ico/edit_reception.png' %}" alt="Edit Receptionist">
           <span>Edit Receptionist</span>
         </div>
       </a>
-      <a href="#">
-        <div class="option">
-          <img src="{% static 'img/ico/logs.png' %}" alt="View Logs">
-          <span>View Logs</span>
-        </div>
-      </a>
     </div>
   </div>
+  {% if alertmessage %}
+  <script>
+    alert('{{alertmessage}}');
+  </script>
+  {% endif %}
 </body>
 </html>

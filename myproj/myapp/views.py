@@ -1708,3 +1708,158 @@ def receptionist_view_payments(request):
             transactiondatas.append(TransactionData(row[0], row[1], row[2], row[3], row[4], row[5]))
 
     return render(request, "receptionist_payments.html", {"transactiondatas": transactiondatas})
+
+
+def doctor_register(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        mobile = request.POST["mobile"]
+        dob = request.POST["dob"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        confirm_password = request.POST["confirm-password"]
+        address = request.POST["address"].replace(",", "-").replace("\r\n", ";")
+        age = request.POST["age"]
+        gender = request.POST["gender"]
+        blood_group = request.POST["blood-group"]
+
+        if password != confirm_password:
+            return render(
+                request, "doctor_register.html", {"alertmessage": "Passwords do not match."}
+            )
+
+        with open("register.csv", "r") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if email == row[3]:
+                    return render(
+                        request,
+                        "doctor_register.html",
+                        {"alertmessage": "E-mail already exists."},
+                    )
+
+            uniqueid_random = str(random.randint(100000, 999999))
+            while uniqueid_random in [row[-1] for row in reader]:
+                uniqueid_random = str(random.randint(100000, 999999))
+
+        with open("register.csv", "a", newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(
+                [
+                    name,
+                    mobile,
+                    dob,
+                    email,
+                    password,
+                    address,
+                    age,
+                    gender,
+                    blood_group,
+                    "doc",
+                    uniqueid_random,
+                ]
+            )
+
+        with open("doctors.csv", "a", newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(
+                [
+                    name,
+                    mobile,
+                    dob,
+                    email,
+                    password,
+                    address,
+                    age,
+                    gender,
+                    blood_group,
+                    "doc",
+                    uniqueid_random,
+                ]
+            )
+
+
+        return render(
+            request,
+            "admin_homepage.html",
+            {"alertmessage": "New user registration information stored successfully."},
+        )
+
+    return render(request, "doctor_register.html")
+
+def receptionist_register(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        mobile = request.POST["mobile"]
+        dob = request.POST["dob"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        confirm_password = request.POST["confirm-password"]
+        address = request.POST["address"].replace(",", "-").replace("\r\n", ";")
+        age = request.POST["age"]
+        gender = request.POST["gender"]
+        blood_group = request.POST["blood-group"]
+
+        if password != confirm_password:
+            return render(
+                request, "receptionist_register.html", {"alertmessage": "Passwords do not match."}
+            )
+
+        with open("register.csv", "r") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if email == row[3]:
+                    return render(
+                        request,
+                        "receptionist_register.html",
+                        {"alertmessage": "E-mail already exists."},
+                    )
+
+            uniqueid_random = str(random.randint(100000, 999999))
+            while uniqueid_random in [row[-1] for row in reader]:
+                uniqueid_random = str(random.randint(100000, 999999))
+
+        with open("register.csv", "a", newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(
+                [
+                    name,
+                    mobile,
+                    dob,
+                    email,
+                    password,
+                    address,
+                    age,
+                    gender,
+                    blood_group,
+                    "rec",
+                    uniqueid_random,
+                ]
+            )
+
+        with open("receptionists.csv", "a", newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(
+                [
+                    name,
+                    mobile,
+                    dob,
+                    email,
+                    password,
+                    address,
+                    age,
+                    gender,
+                    blood_group,
+                    "rec",
+                    uniqueid_random,
+                ]
+            )
+
+
+        return render(
+            request,
+            "admin_homepage.html",
+            {"alertmessage": "New user registration information stored successfully."},
+        )
+
+    return render(request, "receptionist_register.html")

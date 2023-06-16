@@ -120,6 +120,16 @@ urlpatterns = [
         views.receptionist_time_slot,
         name="receptionist_time_slot",
     ),
+    path(
+        "admin/register-doctor/",
+        views.doctor_register,
+        name="doctor_register"
+    ),
+    path(
+        "admin/register-receptionist/",
+        views.receptionist_register,
+        name="receptionist_register"
+    ),
     path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
     # path('validate-otp/', lambda request: redirect('/clinic/forgot-password/'), name="validate_otp")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
