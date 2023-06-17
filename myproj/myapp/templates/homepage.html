@@ -1,41 +1,46 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Login</title>
-        <link type="text/css" rel="stylesheet" href="{% static 'css/styles.css' %}">
-    </head>
-    <body>
-        <div class="container">
-            <h2>Login</h2>
-            <form method="post" action="{% url 'login' %}">
-                {% csrf_token %}
-                <div class="input-group">
-                    <input type="text" name="username" placeholder="Email" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" name="password" placeholder="Password" required>
-                </div>
-                <div class="input-group">
-                    <button type="submit">Login</button>
-                </div>
-                {% if message %}
-                <div class="error-message">
-                    {{ message }}
-                </div>
-                {% endif %}
-            </form>
-            <div class="forgot-password">
-                <a href="/clinic/forgot-password/">Forgot password?</a>
+   <head>
+      <title>Receptionist Home</title>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+   </head>
+   <body>
+      <div class="container">
+         <div class="profile-dropdown">
+            <img src="{% static 'img/ico/profile.png' %}" alt="Profile" class="profile-icon">
+            <div class="dropdown-content">
+               <a href="/clinic/personal-details/">View Profile </a>
+               <a href="/clinic/login/">Log Out </a>
             </div>
-            <div class="signup-link">
-                Don't have an account? <a href="/clinic/register/">Sign up</a>
-            </div>
-        </div>
-        {% if alertmessage %}
-        <script>
-            alert('{{alertmessage}}');
-        </script>
-        {% endif %}
-    </body>
+         </div>
+         <h2>Receptionist Home</h2>
+         <div class="main-options">
+            <a href="/clinic/receptionist/appointment-homepage/">
+               <div class="option">
+                  <img src="{% static 'img/ico/appointment.png' %}" alt="Appointments">
+                  <span>Appointments</span>
+               </div>
+            </a>
+            <a href="/clinic/receptionist/transaction-search-patient/">
+               <div class="option">
+                  <img src="{% static 'img/ico/transactions.png' %}" alt="Fee Transactions">
+                  <span>Transactions</span>
+               </div>
+            </a>
+            <a href="/clinic/receptionist/receptionist-search-patient/">
+               <div class="option">
+                  <img src="{% static 'img/ico/patient.png' %}" alt="Patient Details">
+                  <span>Patient Details</span>
+               </div>
+            </a>
+         </div>
+      </div>
+      {% if alertmessage %}
+      <script>
+         alert('{{alertmessage}}');
+      </script>
+      {% endif %}
+   </body>
 </html>
