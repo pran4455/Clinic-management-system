@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Search Patient</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/receptionist_transaction_search_patient.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Search Patient</h2>
+            <form method="post" action="{% url 'receptionist_transaction_search_patient' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="patientId">Patient ID:</label>
+                    <input type="text" id ="patientid" name="patientid" placeholder="Enter Patient ID">
+                </div>
+                <b>(or)</b>
+                <div class="input-group">
+                    <label for="patientName">Patient Name:</label>
+                    <input type="text" id="patientname" name="patientname" placeholder="Enter Patient Name">
+                </div>
+                <div class="button-group">
+                    <button type="submit">Search</button>
+                </div>
+                <div class="button-group">
+                    <button type="button" onclick="window.location.href='{% url 'receptionist_view_payments' %}'">View All Transactions</button>
+                </div>
+            </form>
+            <div class="home-link">
+                <a href="/clinic/receptionist/">Back to Home</a>
+            </div>
+        </div>
+        {% if alertmessage %}
+        <script>
+            alert('{{alertmessage}}');
+        </script>
+        {% endif %}
+    </body>
+</html>

@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Local Appointments</title>
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/local_appointments.css' %}">
-</head>
-<body>
-  <div class="container">
-    <h2>All Appointments</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Patient Name</th>
-          <th>Doctor Name</th>
-          <th>Age</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for appointment in appointmentdata %}
-        <tr>
-          <td>{{ appointment.name }}</td>
-          <td>{{ appointment.doctor }}</td>
-          <td>{{ appointment.age }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div class="home-link">
-      <a href="/clinic/receptionist/">Back to Home</a>
-    </div>
-  </div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Local Appointments</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/local_appointments.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>All Appointments</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Doctor Name</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointmentdata %}
+                    <tr>
+                        <td>{{ appointment.name }}</td>
+                        <td>{{ appointment.doctor }}</td>
+                        <td>{{ appointment.age }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="home-link">
+                <a href="/clinic/receptionist/">Back to Home</a>
+            </div>
+        </div>
+    </body>
 </html>

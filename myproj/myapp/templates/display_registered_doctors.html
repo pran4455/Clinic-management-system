@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Registered Doctors</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/display_registered_patients.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Registered Doctors</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Unique ID</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>DOB</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Blood Group</th>
+                        <th>Privilege</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in doctors %}
+                    <tr>
+                        <td>{{ patient.uniqueid }}</td>
+                        <td>{{ patient.name }}</td>
+                        <td>{{ patient.phonenumber }}</td>
+                        <td>{{ patient.dob }}</td>
+                        <td>{{ patient.email }}</td>
+                        <td>{{ patient.address }}</td>
+                        <td>{{ patient.age }}</td>
+                        <td>{{ patient.gender }}</td>
+                        <td>{{ patient.blood }}</td>
+                        <td>{{ patient.privilege }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="home-link">
+                <a href="/clinic/admin/">Back to Home</a>
+            </div>
+        </div>
+    </body>
+</html>

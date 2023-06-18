@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Receptionist Registration</title>
+      <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+   </head>
+   <body>
+      <div class="container">
+         <h2>Registration</h2>
+         {% if error_message %}
+         <p style="color: red;">{{ error_message }}</p>
+         {% endif %}
+         {% if message %}
+         <p style="color: green;">{{ message }}</p>
+         {% endif %}
+         <form method="post" action="{% url 'receptionist_register' %}">
+            {% csrf_token %}
+            <div class="input-group">
+               <div class="input-row">
+                  <input type="text" name="name" placeholder="Name" required>
+                  <input type="tel" name="mobile" placeholder="Mobile Number" required>
+               </div>
+            </div>
+            <div class="input-group">
+               <div class="input-row">
+                  <input type="text" name="dob" placeholder="Date of Birth" onfocus="(this.type='date')" required>
+                  <input type="email" name="email" placeholder="Email" required>
+               </div>
+            </div>
+            <div class="input-group">
+               <div class="input-row">
+                  <input type="password" name="password" placeholder="Password" required>
+                  <input type="password" name="confirm-password" placeholder="Confirm Password" required>
+               </div>
+            </div>
+            <div class="input-group">
+               <textarea name="address" placeholder="Address" required rows="4" cols="30" style="resize: none;"></textarea>
+            </div>
+            <div class="input-group">
+               <div class="input-row">
+                  <input type="number" name="age" placeholder="Age" required>
+                  <select name="gender" required>
+                     <option value="" disabled selected>Gender</option>
+                     <option value="Male">Male</option>
+                     <option value="Female">Female</option>
+                     <option value="Other">Other</option>
+                  </select>
+                  <input type="text" name ="blood-group" placeholder="Blood Group" required>
+               </div>
+            </div>
+            <div class="input-group">
+               <button type="submit">Register</button>
+            </div>
+         </form>
+      </div>
+      {% if alertmessage %}
+      <script>
+         alert('{{alertmessage}}');
+      </script>
+      {% endif %}
+   </body>
+</html>

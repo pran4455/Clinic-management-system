@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Appointments</title>
-    {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/receptionist_appointment_homepage.css' %}">
-</head>
-<body>
-  <div class="container">
-    <h2>Appointments</h2>
-    <div class="button-group">
-      <button class="view-appointments-btn" onclick="window.location.href='{% url 'receptionist_view_appointments' %}'">View All Appointments</button>
-      <button class="book-appointment-btn" onclick="window.location.href='{% url 'receptionist_book_appointment' %}'">Book Appointment</button>
-      <button class="edit-time-slots-btn" onclick="window.location.href='{% url 'receptionist_time_slot' %}'">Edit Time Slots</button>
-      <button class="view-local-appointments-btn" onclick="window.location.href='{% url 'receptionist_view_local_appointments' %}'">View Local Appointments</button>
-    </div>
-    <div class="home-link">
-      <a href="/clinic/receptionist/">Back to Home</a>
-    </div>
-  </div>
-</body>
+    <head>
+        <title>Appointments</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/receptionist_appointment_homepage.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Appointments</h2>
+            <div class="button-group">
+                <button class="view-appointments-btn" onclick="window.location.href='{% url 'receptionist_view_appointments' %}'">View All Appointments</button>
+                <button class="book-appointment-btn" onclick="window.location.href='{% url 'receptionist_book_appointment' %}'">Book Appointment</button>
+                <button class="edit-time-slots-btn" onclick="window.location.href='{% url 'receptionist_time_slot' %}'">Edit Time Slots</button>
+                <button class="view-local-appointments-btn" onclick="window.location.href='{% url 'receptionist_view_local_appointments' %}'">View Local Appointments</button>
+            </div>
+            <div class="home-link">
+                <a href="/clinic/receptionist/">Back to Home</a>
+            </div>
+        </div>
+    </body>
 </html>

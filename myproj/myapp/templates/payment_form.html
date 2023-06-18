@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Payment Form</title>
+        <meta charset="UTF-8">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/payment_form.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Payment Form</h2>
+            <form action="{% url 'payment_form' %}" method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter patient's name" required readonly>
+                </div>
+                <div class="input-group">
+                    <label for="unique-id">Unique ID:</label>
+                    <input type="text" id="unique-id" name="unique-id" placeholder="Enter unique ID" required readonly>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Email" required readonly>
+                </div>
+                <div class="input-group">
+                    <label for="treatment-charges">Treatment Charges: (In INR)</label>
+                    <input type="text" id="treatment-charges" name="treatment-charges" placeholder="Enter treatment charges" required>
+                </div>
+                <div class="input-group">
+                    <label for="charge-type">Charge Type:</label>
+                    <select id="charge-type" name="charge-type" required>
+                        <option value="" disabled selected>Select charge type</option>
+                        <option value="Consultation">Consultation</option>
+                        <option value="Procedure">Procedure</option>
+                        <option value="Medication">Medication</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+            document.getElementById("name").value = "{{ name }}";
+            document.getElementById("unique-id").value = "{{ uniqueid }}";
+            document.getElementById("email").value = "{{ email }}";
+        </script>
+    </body>
+</html>

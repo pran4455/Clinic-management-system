@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Patient Details</title>
+        <meta charset="UTF-8">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static '/css/view_patient_history.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Personal Details</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="unique-id">Unique ID:</label>
+                    <input type="text" id="unique-id" name="unique-id" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="patient-name">Patient Name:</label>
+                    <input type="text" id="patient-name" name="patient-name" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="phone-number">Phone Number:</label>
+                    <input type="text" id="phone-number" name="phone-number" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <input type="text" id="gender" name="gender" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="blood-group">Blood Group:</label>
+                    <input type="text" id="blood-group" name="blood-group" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea rows="4" cols="40" id="address" name="address" readonly></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="text" id="age" name="age" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="last-appointment">Last Appointment:</label>
+                    <input type="text" id="last-appointment" name="last-appointment" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="upcoming-appointment">Upcoming Appointment:</label>
+                    <input type="text" id="upcoming-appointment" name="upcoming-appointment" readonly>
+                </div>
+            </div>
+            <h2>Dental Details</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dental-carries">Dental Carries:</label>
+                    <textarea rows="4" cols="40" id="dental-carries" name="dental-carries" readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="missing-teeth">Missing Teeth:</label>
+                    <textarea rows="4" cols="40" id="missing-teeth" name="missing-teeth" readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="allergy">Allergy:</label>
+                    <textarea rows="4" cols="40" id="allergy" name="allergy" readonly></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="abrasions">Abrasions:</label>
+                    <textarea rows="4" cols="40" id="abrasions" name="abrasions" readonly></textarea>
+                </div>
+            </div>
+            <h2>Medical Details</h2>
+            <table class="details-table">
+                <thead>
+                    <tr>
+                        <th>Examination</th>
+                        <th>Prescription</th>
+                        <th>Treatment</th>
+                        <th>Treatment Advice</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for medicaldata in medicaldatas %}
+                    <tr>
+                        <td>{{ medicaldata.examination }}</td>
+                        <td>{{ medicaldata.prescription }}</td>
+                        <td>{{ medicaldata.treatment }}</td>
+                        <td>{{ medicaldata.treatmentadvice }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h2>Appointment Details</h2>
+            <table class="appointment-table">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Doctor Name</th>
+                        <th>Date</th>
+                        <th>Timeslot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointmentdata in appointmentdatas %}
+                    <tr>
+                        <td>{{ appointmentdata.patientname }}</td>
+                        <td>{{ appointmentdata.doctorname }}</td>
+                        <td>{{ appointmentdata.date }}</td>
+                        <td>{{ appointmentdata.timeslot }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="home-link">
+                <a href="/clinic/patient/">Back to Home</a>
+            </div>
+        </div>
+        </div>
+        <script>
+            document.getElementById("unique-id").value = "{{uniqueid}}";
+            document.getElementById("patient-name").value = "{{patientname}}";
+            document.getElementById("phone-number").value = "{{phonenumber}}";
+            document.getElementById("gender").value = "{{gender}}";
+            document.getElementById("blood-group").value = "{{bloodgroup}}";
+            document.getElementById("address").value = "{{address}}";
+            document.getElementById("dob").value = "{{dob}}";
+            document.getElementById("age").value = "{{age}}";
+            document.getElementById("username").value = "{{username}}";
+            document.getElementById("last-appointment").value = "{{lastappointment}}";
+            document.getElementById("upcoming-appointment").value = "{{upcomingappointment}}";
+            document.getElementById("dental-carries").value = "{{dentalcarries}}";
+            document.getElementById("missing-teeth").value = "{{missingteeth}}";
+            document.getElementById("allergy").value = "{{allergy}}";
+            document.getElementById("abrasions").value = "{{abrasions}}";
+        </script>
+    </body>
+</html>

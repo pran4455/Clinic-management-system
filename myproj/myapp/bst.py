@@ -214,7 +214,7 @@ def deserialize_bst(serialized):
     while True:
         if index >= len(nodes):
             return bintree
-        elif nodes[index] == '#':
+        elif nodes[index] == "#":
             index += 1
         else:
             value = nodes[index]

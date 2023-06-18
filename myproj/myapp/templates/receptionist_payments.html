@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Payments</title>
+        <meta charset="UTF-8">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/receptionist_payments.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Your Payments</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Patient ID</th>
+                        <th>Email</th>
+                        <th>Amount</th>
+                        <th>Charge Type</th>
+                        <th>Charge Date and Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transactiondata in transactiondatas %}
+                    <tr>
+                        <td>{{ transactiondata.name }}</td>
+                        <td>{{ transactiondata.id }}</td>
+                        <td>{{ transactiondata.email }}</td>
+                        <td>{{ transactiondata.amount }}</td>
+                        <td>{{ transactiondata.chargetype }}</td>
+                        <td>{{ transactiondata.date_time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="home-link">
+                <a href="/clinic/receptionist/">Back to Home</a>
+            </div>
+        </div>
+    </body>
+</html>

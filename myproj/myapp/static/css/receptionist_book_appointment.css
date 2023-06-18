@@ -1,102 +1,83 @@
 body {
-    font-family: Arial, sans-serif;
-    background-image: url('../img/bg.webp');
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    background-attachment: fixed;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+     font-family: Arial, sans-serif;
+     background-image: url('../img/bg.webp');
+     background-size: cover;
+     display: flex;
+     justify-content: center;
+     background-attachment: fixed;
+     align-items: center;
+     height: 100vh;
+     margin: 0;
 }
-
-.container {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
+ .container {
+     background-color: #ffffff;
+     padding: 30px;
+     border-radius: 8px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     max-width: 400px;
+     width: 100%;
+     text-align: center;
 }
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+ h1 {
+     text-align: center;
+     margin-bottom: 20px;
+     color: #333;
 }
-
-form {
-    display: grid;
-    gap: 10px;
+ form {
+     display: grid;
+     gap: 10px;
 }
-
-.input-group {
-    display: grid;
+ .input-group {
+     display: grid;
 }
-
-label {
-    font-weight: bold;
-    margin-right: auto;
-  margin-bottom: 2px;
-  }
-
-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+ label {
+     font-weight: bold;
+     margin-right: auto;
+     margin-bottom: 2px;
 }
-
-button:hover {
-    background-color: #0056b3;
+ button {
+     background-color: #007bff;
+     color: #fff;
+     padding: 10px 20px;
+     border: none;
+     border-radius: 6px;
+     cursor: pointer;
+     font-weight: bold;
+     transition: background-color 0.3s ease;
 }
-
-input[type="text"],
-input[type="number"],
-input[type="date"],
-textarea {
-    padding: 10px 15px;
-    border-radius: 6px;
-    border: none;
-    background-color: #f0f0f0;
-    width: 100%;
-    box-sizing: border-box;
-  resize: none;
+ button:hover {
+     background-color: #0056b3;
 }
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+ input[type="text"], input[type="number"], input[type="date"], textarea {
+     padding: 10px 15px;
+     border-radius: 6px;
+     border: none;
+     background-color: #f0f0f0;
+     width: 100%;
+     box-sizing: border-box;
+     resize: none;
 }
-
-.button{
-   background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+ input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus, textarea:focus {
+     outline: none;
+     border-color: #007bff;
+     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
-
-.home-link {
-  font-size: 14px;
-  margin-top: 20px;
+ .button{
+     background-color: #007bff;
+     color: #fff;
+     padding: 10px 20px;
+     border: none;
+     border-radius: 6px;
+     cursor: pointer;
+     font-weight: bold;
+     transition: background-color 0.3s ease;
 }
-
-.home-link a {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
+ .home-link {
+     font-size: 14px;
+     margin-top: 20px;
+}
+ .home-link a {
+     color: #007bff;
+     text-decoration: none;
+     font-weight: bold;
 }

@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Book Appointment</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static '/css/patient_book_appointment.css' %}">
-</head>
-<body>
-    <div class="container">
-        <h1>Book Appointment</h1>
-        <form method="post" action="{% url 'patient_book_appointment' %}">
-            {% csrf_token %}
-            <div class="input-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required readonly>
+    <head>
+        <title>Book Appointment</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static '/css/patient_book_appointment.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Book Appointment</h1>
+            <form method="post" action="{% url 'patient_book_appointment' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required readonly>
+                </div>
+                <div class="input-group">
+                    <label for="uniqueid">Unique ID:</label>
+                    <input type="text" id="uniqueid" name="uniqueid" required readonly>
+                </div>
+                <div class="input-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" required readonly>
+                </div>
+                <div class="input-group">
+                    <label for="sex">Sex:</label>
+                    <input type="text" id="sex" name="sex" required readonly>
+                </div>
+                <div class="input-group">
+                    <label for="address" >Address:</label>
+                    <textarea id="address" name="address" rows="4" cols="40" required readonly></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="date">Date of Appointment:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="input-group">
+                    <label for="doctor">Doctor Name:</label>
+                    <select id="doctor" name="doctor" required>
+                        <option value="">Select Doctor</option>
+                        {% for doctor in doctors %}
+                        <option value="{{ doctor.name }}">{{ doctor.name }}</option>
+                        {% endfor %}}
+                    </select>
+                </div>
+                <div class="input-group">
+                    <button type="submit" id="view-timeslots">View Available Time Slots</button>
+                </div>
+            </form>
+            <div class="home-link">
+                <a href="/clinic/patient/">Back to Home Page</a>
             </div>
-            <div class="input-group">
-                <label for="uniqueid">Unique ID:</label>
-                <input type="text" id="uniqueid" name="uniqueid" required readonly>
-            </div>
-            <div class="input-group">
-                <label for="age">Age:</label>
-                <input type="number" id="age" name="age" required readonly>
-            </div>
-            <div class="input-group">
-                <label for="sex">Sex:</label>
-                <input type="text" id="sex" name="sex" required readonly>
-            </div>
-            <div class="input-group">
-                <label for="address" >Address:</label>
-                <textarea id="address" name="address" rows="4" cols="40" required readonly></textarea>
-            </div>
-            <div class="input-group">
-                <label for="date">Date of Appointment:</label>
-                <input type="date" id="date" name="date" required>
-            </div>
-            <div class="input-group">
-                <label for="doctor">Doctor Name:</label>
-                <select id="doctor" name="doctor" required>
-                    <option value="">Select Doctor</option>
-                    {% for doctor in doctors %}
-                    <option value="{{ doctor.name }}">{{ doctor.name }}</option>
-                    {% endfor %}}
-                </select>
-            </div>
-            <div class="input-group">
-                <button type="submit" id="view-timeslots">View Available Time Slots</button>
-            </div>
-        </form>
-         <div class="home-link">
-      <a href="/clinic/patient/">Back to Home Page</a>
-    </div>
-    </div>
-<script>
-    document.getElementById("name").value = "{{name}}";
-    document.getElementById("uniqueid").value = "{{uniqueid}}";
-    document.getElementById("age").value = "{{age}}";
-    document.getElementById("sex").value = "{{sex}}";
-    document.getElementById("address").value = "{{address}}";
+        </div>
+        <script>
+            document.getElementById("name").value = "{{name}}";
+            document.getElementById("uniqueid").value = "{{uniqueid}}";
+            document.getElementById("age").value = "{{age}}";
+            document.getElementById("sex").value = "{{sex}}";
+            document.getElementById("address").value = "{{address}}";
 
-</script>
-</body>
+        </script>
+    </body>
 </html>

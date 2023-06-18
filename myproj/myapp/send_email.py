@@ -2,9 +2,10 @@ import smtplib
 from email.message import EmailMessage
 import os
 
+
 def send_email(to, subject, content):
-    user = os.getenv('EMAIL_USER')
-    key = 'rrsfsilblgzbiaep'
+    user = os.getenv("EMAIL_USER")
+    key = "rrsfsilblgzbiaep"
 
     msg = EmailMessage()
 
